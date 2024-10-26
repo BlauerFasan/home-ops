@@ -64,7 +64,7 @@ spec:
               MAIL_HOST: smtp-relay.networking.svc.cluster.local.
               MAIL_PORT: "25"
               DB_CONNECTION: pgsql
-              DB_HOST: "${POSTGRES_HOST_OLD}"
+              DB_HOST: "${POSTGRES_HOST_MAIN}"
               DB_PORT: "${POSTGRES_PORT}"
               DB_DATABASE: *app
             envFrom:
