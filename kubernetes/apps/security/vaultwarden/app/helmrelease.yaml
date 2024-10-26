@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app vaultwarden
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      vaultwarden:
+        replicas: 1
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: "16.3"
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: vaultwarden-init-db
+
+        containers:
+          app:
+            image:
+              repository: vaultwarden/server
+              tag: 1.32.1-alpine
+
+            env:
+              TZ: ${CLUSTER_TIMEZONE}
+              DOMAIN: https://kinko.${SECRET_DOMAIN}
+              DATA_FOLDER: "data"
+              ICON_CACHE_FOLDER: "data/icon_cache"
+              ATTACHMENTS_FOLDER: "data/attachments"
+              SENDS_FOLDER: "data/sends"
+              SIGNUPS_ALLOWED: false
+              INVITATIONS_ALLOWED: true
+              SENDS_ALLOWED: true
+              EMERGENCY_ACCESS_ALLOWED: true
+              DISABLE_ICON_DOWNLOAD: false
+              # YUBICO_CLIENT_ID:
+              # YUBICO_SECRET_KEY:
+              WEBSOCKET_ENABLED: true
+              WEBSOCKET_ADDRESS: 0.0.0.0
+              SMTP_HOST: smtp-relay.networking.svc.cluster.local.
+              SMTP_PORT: 25
+              SMTP_SECURITY: "off"
+              SMTP_FROM: noreply@${SECRET_MAIL_DOMAIN}
+              SMTP_FROM_NAME: Vaultwarden
+            envFrom:
+              - secretRef:
+                  name: vaultwarden-secret
+
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                memory: 2Gi
+
+    service:
+      main:
+        controller: *app
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /data

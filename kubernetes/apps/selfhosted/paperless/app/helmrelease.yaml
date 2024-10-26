@@ -1,0 +1,116 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app paperless
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      paperless:
+        strategy: RollingUpdate
+        replicas: 1
+        type: statefulset
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: "16.3"
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: paperless-init-db
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: 2.12.1@sha256:217cec76128c2545872cf356694f2ffd4524cb84892d0333e654795dec255633
+
+            env:
+              #General
+              PAPERLESS_URL: https://dms.${SECRET_DOMAIN}
+              PAPERLESS_PORT: &port 8000
+              PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
+              PAPERLESS_TASK_WORKERS: 2
+              #Folder Config
+              PAPERLESS_CONSUMPTION_DIR: /library/consume
+              PAPERLESS_MEDIA_ROOT: /library/media
+              PAPERLESS_DATA_DIR: /library/data
+              PAPERLESS_EXPORT_DIR: /library/export
+              PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{created_month}-{created_day}_{title}"
+              #Import Folder Config
+              PAPERLESS_CONSUMER_POLLING: "60"
+              PAPERLESS_CONSUMER_RECURSIVE: "true"
+              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+              #Remote User
+              # PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+              # PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_X_AUTHENTIK_USERNAME
+              # OIDC
+              PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+              PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
+              PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
+              #Language
+              PAPERLESS_OCR_LANGUAGES: deu
+              PAPERLESS_OCR_LANGUAGE: deu
+              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+              #Database
+              PAPERLESS_REDIS: redis://dragonfly.database.svc.cluster.local.:6379
+              #Tika & Gotenberg
+              PAPERLESS_TIKA_ENABLED: 1
+              PAPERLESS_TIKA_ENDPOINT: http://tika.serivces.svc.cluster.local:9998
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg.serivces.svc.cluster.local:3000
+
+            envFrom:
+              - secretRef:
+                  name: paperless-secret
+
+            resources:
+              requests:
+                cpu: 25m
+                memory: 1Gi
+              limits:
+                memory: 5Gi
+
+    service:
+      main:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    persistence:
+      library:
+        enabled: true
+        existingClaim: paperless-data-v1
+        globalMounts:
+          - path: /library

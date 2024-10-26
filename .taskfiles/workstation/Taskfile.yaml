@@ -68,9 +68,9 @@ tasks:
   venv:
     desc: Set up virtual environment
     cmds:
-      - python3 -m venv {{.VIRTUAL_ENV}}
-      - '{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade pip setuptools wheel'
-      - '{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade --requirement "{{.ROOT_DIR}}/requirements.txt"'
+      - python3.11 -m venv {{.VIRTUAL_ENV}}
+      - '{{.VIRTUAL_ENV}}/bin/python3.11 -m pip install --upgrade pip setuptools wheel'
+      - '{{.VIRTUAL_ENV}}/bin/python3.11 -m pip install --upgrade --requirement "{{.ROOT_DIR}}/requirements.txt"'
     sources:
       - '{{.ROOT_DIR}}/requirements.txt'
     generates:

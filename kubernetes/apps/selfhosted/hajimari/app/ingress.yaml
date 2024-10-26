@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hajimari-dashboard
+  annotations:
+    external-dns/is-public: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    hajimari.io/enable: "false"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-internal-default-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "hajimari.${SECRET_DOMAIN}"
+      secretName: "hajimari.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: hajimari.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hajimari
+                port:
+                  number: 3000
+

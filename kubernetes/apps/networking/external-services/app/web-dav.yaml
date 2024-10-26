@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synology-webdav-externalname
+  namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: "https"
+spec:
+  type: ExternalName
+  ports:
+  - name: https
+    port: 5006
+  externalName: "${LOCAL_LAN_NAS}"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: synology-webdav
+  annotations:
+    external-dns/is-public: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "false"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "dav.${SECRET_DOMAIN}"
+      secretName: "dav.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: dav.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: synology-webdav-externalname
+                port:
+                  number: 5006

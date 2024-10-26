@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app monica-db
+  namespace: flux-system
+spec:
+  targetNamespace: selfhosted
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/apps/selfhosted/monica/database
+  dependsOn:
+    - name: rook-ceph-cluster
+    - name: volsync
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  prune: true
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 10Gi
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app monica
+  namespace: flux-system
+spec:
+  targetNamespace: database
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/apps/selfhosted/monica/app
+  dependsOn:
+    - name: monica-db
+    - name: rook-ceph-cluster
+    - name: traefik
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  prune: true
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 2Gi

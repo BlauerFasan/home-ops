@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app stirling-pdf
+  namespace: services
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: false
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
+  values:
+    controllers:
+      stirling-pdf:
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/stirling-tools/s-pdf
+              tag: 0.29.0@sha256:5b9c9443e6eb0fa23b39475d68741d80826249193df231d6859ecda0f0aedd8d
+              pullPolicy: IfNotPresent
+
+            env:
+              TZ: ${CLUSTER_TIMEZONE}
+              SYSTEM_DEFAULTLOCALE: de-DE
+              DOCKER_ENABLE_SECURITY: false
+              SECURITY_ENABLE_LOGIN: false
+
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 500Mi
+              limits:
+                memory: 500Mi
+
+    service:
+      app:
+        controller: stirling-pdf
+        ports:
+          http:
+            port: 8080

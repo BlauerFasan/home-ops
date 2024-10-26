@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synology-admin-externalname
+  namespace: networking
+spec:
+  type: ExternalName
+  ports:
+  - name: https
+    port: 5001
+  externalName: "${LOCAL_LAN_NAS}"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: synology-admin
+  annotations:
+    external-dns/is-public: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: nas
+    hajimari.io/group: server
+    hajimari.io/appName: synology
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "dsm.${SECRET_DOMAIN}"
+      secretName: "dsm.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: dsm.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: synology-admin-externalname
+                port:
+                  number: 5001

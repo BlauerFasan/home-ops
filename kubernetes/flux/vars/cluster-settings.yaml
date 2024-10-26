@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  CLUSTER_TIMEZONE: "Europe/Zurich"
+  CLUSTER_LB_TRAEFIK: "172.30.100.175"
+  CLUSTER_LB_UNIFI: "172.30.100.176"
+  CLUSTER_LB_SMTP: "172.30.100.177"
+  LOCAL_LAN_NAS: "172.30.100.180"
+  POSTGRES_HOST_NEW: "postgres17-rw.database.svc.cluster.local."
+  POSTGRES_HOST_MAIN: "postgres16-rw.database.svc.cluster.local."
+  POSTGRES_HOST_OLD: "postgres14-rw.database.svc.cluster.local."
+  POSTGRES_PORT: "5432"

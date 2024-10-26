@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ghostfolio
+  annotations:
+    external-dns/is-public: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: finance
+    hajimari.io/group: finance
+    hajimari.io/appName: Zaisan
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-internal-default-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "zaisan.${SECRET_DOMAIN}"
+      secretName: "zaisan.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: zaisan.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ghostfolio
+                port:
+                  number: 3333

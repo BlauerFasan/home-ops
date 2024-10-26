@@ -1,0 +1,92 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app authentik
+  namespace: authentik
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: authentik
+      version: 2024.8.3
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: authentik
+        namespace: flux-system
+
+  install:
+    createNamespace: false
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
+  values:
+    global:
+      # fullnameOverride: authentik
+      deploymentAnnotations:
+        secret.reloader.stakater.com/reload: authentik-secret
+
+      envFrom:
+        - secretRef:
+            name: authentik-secret
+
+    geoip:
+      # -- enable GeoIP sidecars for the authentik server and worker pods
+      enabled: false
+
+    server:
+      replicas: 1
+
+      initContainers:
+        - name: init-db
+          image: ghcr.io/onedr0p/postgres-init:16.3@sha256:9c136223fb4e05b0ca24e2350c2dc45843110d0e1d09615c52c9a037628c09fa
+          envFrom:
+            - secretRef:
+                  name: authentik-init-db
+
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+
+      resources:
+        requests:
+          cpu: 50m
+          memory: 500Mi
+        limits:
+          memory: 800Mi
+
+    authentik:
+      log_level: info
+      email:
+        use_tls: false
+      outposts:
+        container_image_base: ghcr.io/goauthentik/%(type)s:%(version)s
+      error_reporting:
+        enabled: false
+        send_pii: false
+
+    postgresql:
+      enabled: false
+    redis:
+      enabled: false
+    prometheus:
+      rules:
+        enabled: true
+
+    worker:
+      name: worker
+      replicas: 2
+
+      resources:
+        requests:
+          cpu: 50m
+          memory: 500Mi
+        limits:
+          memory: 1200Mi
+

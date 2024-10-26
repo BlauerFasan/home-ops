@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minio
+  namespace: minio
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: false
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 5
+
+  values:
+    controllers:
+      minio:
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: quay.io/minio/minio
+              tag: RELEASE.2024-10-13T13-34-11Z@sha256:9535594ad4122b7a78c6632788a989b96d9199b483d3bd71a5ceae73a922cdfa
+
+            env:
+              TZ: ${CLUSTER_TIMEZONE}
+              MINIO_UPDATE: "off"
+              MINIO_API_CORS_ALLOW_ORIGIN: "https://minio.${SECRET_DOMAIN},https://s3.${SECRET_DOMAIN}"
+              MINIO_BROWSER_REDIRECT_URL: "https://minio.${SECRET_DOMAIN}"
+              # MINIO_SERVER_URL: "https://s3.${SECRET_DOMAIN}"
+              MINIO_PROMETHEUS_URL: https://prometheus.${SECRET_DOMAIN}"
+              MINIO_PROMETHEUS_JOB_ID: minio
+              MINIO_PROMETHEUS_AUTH_TYPE: public
+
+            envFrom:
+              - secretRef:
+                  name: minio-secrets
+
+            args: ["server", "/data", "--console-address", ":9001"]
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /minio/health/live
+                    port: 9000
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 6
+              readiness: *probes
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+
+    service:
+      main:
+        controller: minio
+        ports:
+          http:
+            port: 9001
+          s3:
+            port: 9000
+
+    serviceMonitor:
+      app:
+        serviceName: minio
+        endpoints:
+          - port: s3
+            scheme: http
+            path: /minio/v2/metrics/cluster
+            interval: 1m
+            scrapeTimeout: 10s
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: minio-data-v1
+        globalMounts:
+          - path: /data

@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pgadmin
+  annotations:
+    external-dns/is-public: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: simple-icons:postgresql
+    hajimari.io/group: server
+    hajimari.io/appName: postgresql-admin
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-internal-default-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "pgadmin.${SECRET_DOMAIN}"
+      secretName: "pgadmin.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: pgadmin.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80

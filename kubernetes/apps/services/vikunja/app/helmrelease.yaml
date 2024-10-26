@@ -1,0 +1,122 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app vikunja
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      vikunja:
+        replicas: 1
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: vikunja/api
+              tag: 0.22.1@sha256:c9415431e6235229302bb8f9ee6660b74c24859d1e8adbc4a3e25bd418604b57
+
+            env:
+              VIKUNJA_SERVICE_TIMEZONE: ${CLUSTER_TIMEZONE}
+              VIKUNJA_SERVICE_FRONTENDURL: yarukoto.${SECRET_DOMAIN}
+              VIKUNJA_SERVICE_ENABLEREGISTRATION: true
+              VIKUNJA_DEFAULTSETTINGS_WEEK_START: 1
+              VIKUNJA_DEFAULTSETTINGS_TIMEZONE: ${CLUSTER_TIMEZONE}
+              VIKUNJA_MAILER_ENABLED: true
+              VIKUNJA_MAILER_HOST: smtp-relay.networking.svc.cluster.local.
+              VIKUNJA_MAILER_PORT: "25"
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <yarukoto@${SECRET_MAIL_DOMAIN}>
+            envFrom:
+              - secretRef:
+                  name: vikunja-secret
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 24Mi
+              limits:
+                memory: 300Mi
+
+          frontend:
+            image:
+              repository: vikunja/frontend
+              tag: 0.22.1@sha256:f0223d441997fe29c377d0b476dc4bb2fc091b44b9c24d76b1b88c213df520c5
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 26Mi
+              limits:
+                memory: 28Mi
+
+          proxy:
+            image:
+              repository: caddy
+              tag: 2.8.4-alpine@sha256:33937b9d51461ea87794350c1c09ce53f327802508929d78f3b5642533f2f7db
+              pullPolicy: IfNotPresent
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 30Mi
+              limits:
+                memory: 100Mi
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8080
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        advancedMounts:
+          vikunja:
+            app:
+              - path: /app/vikunja/files
+      vikunja-config:
+        enabled: true
+        type: configMap
+        name: vikunja-configmap
+        advancedMounts:
+          vikunja:
+            app:
+              - path: /etc/vikunja/config.yml
+                subPath: config.yml
+      caddy-config:
+        enabled: true
+        type: configMap
+        name: vikunja-configmap
+        advancedMounts:
+          vikunja:
+            proxy:
+              - path: /etc/caddy/Caddyfile
+                subPath: Caddyfile

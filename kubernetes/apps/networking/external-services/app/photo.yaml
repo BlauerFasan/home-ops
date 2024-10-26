@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synology-photo-externalname
+  namespace: networking
+spec:
+  type: ExternalName
+  ports:
+  - name: https
+    port: 5443
+  externalName: "${LOCAL_LAN_NAS}"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: synology-photo
+  annotations:
+    external-dns/is-public: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: image-album
+    hajimari.io/group: home
+    hajimari.io/appName: photos
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "photo.${SECRET_DOMAIN}"
+      secretName: "photo.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: photo.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: synology-photo-externalname
+                port:
+                  number: 5443

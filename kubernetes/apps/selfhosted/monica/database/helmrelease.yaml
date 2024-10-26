@@ -1,0 +1,45 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app monica-db
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: mariadb
+      version: 19.0.7
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  values:
+    auth:
+      existingSecret: monica-db-secrets
+
+    primary:
+      persistence:
+        enabled: true
+        existingClaim: *app
+
+      resources:
+        requests:
+          cpu: 17m
+          memory: 143Mi
+        limits:
+          memory: 143Mi

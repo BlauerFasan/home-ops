@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app firefly-iii
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: false
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
+  values:
+    controllers:
+      firefly-iii:
+        replicas: 1
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: 'true'
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: "16.3"
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: firefly-iii-init-db
+
+        containers:
+          app:
+            image:
+              repository: fireflyiii/core
+              tag: version-6.1.19
+
+            env:
+              TZ: ${CLUSTER_TIMEZONE}
+              APP_URL: "yosan.${SECRET_DOMAIN}"
+              TRUSTED_PROXIES: "**" #TODO: Change this
+              AUTHENTICATION_GUARD: "remote_user_guard"
+              AUTHENTICATION_GUARD_HEADER: X-Authentik-Ffiii-User
+              AUTHENTICATION_GUARD_EMAIL: X-Authentik-Ffiii-Email
+              SEND_REGISTRATION_MAIL: false
+              SEND_ERROR_MESSAGE: false
+              SEND_LOGIN_NEW_IP_WARNING: false
+              MAIL_MAILER: smtp
+              MAIL_HOST: smtp-relay.networking.svc.cluster.local.
+              MAIL_PORT: "25"
+              DB_CONNECTION: pgsql
+              DB_HOST: "${POSTGRES_HOST_OLD}"
+              DB_PORT: "${POSTGRES_PORT}"
+              DB_DATABASE: *app
+            envFrom:
+              - secretRef:
+                  name: firefly-iii-secret
+
+            resources:
+              requests:
+                cpu: 100m
+                memory: 150Mi
+              limits:
+                memory: 1Gi
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8080
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        advancedMounts:
+          firefly-iii:
+            app:
+              - path: /var/www/html/firefly-iii/storage/upload
