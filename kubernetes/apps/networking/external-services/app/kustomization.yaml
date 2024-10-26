@@ -7,5 +7,4 @@ resources:
   - ./drive.yaml
   - ./dsm.yaml
   - ./photo.yaml
-  # - -/pvc-cluster.yaml
   - ./web-dav.yaml

@@ -13,6 +13,7 @@ spec:
   path: ./kubernetes/apps/services/stirling-pdf/app
   dependsOn:
     - name: traefik
+    - name: authentik
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
