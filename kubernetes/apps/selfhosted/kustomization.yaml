@@ -6,8 +6,8 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./firefly-iii/ks.yaml
-  # - ./ghostfolio/ks.yaml
+  - ./firefly-iii/ks.yaml
+  - ./ghostfolio/ks.yaml
   - ./hajimari/ks.yaml
   # - ./monica/ks.yaml
   # - ./paperless/ks.yaml
