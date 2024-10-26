@@ -60,13 +60,13 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "chrb-vmd-nd1"
+          - name: "chrb-vmp-nd1"
             devices:
               - name: "/dev/vdb"
-          - name: "chrb-vmd-nd2"
+          - name: "chrb-vmp-nd2"
             devices:
               - name: "/dev/vdb"
-          - name: "chrb-vmd-nd3"
+          - name: "chrb-vmp-nd3"
             devices:
               - name: "/dev/vdb"
       # placement:
