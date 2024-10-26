@@ -5,7 +5,7 @@ metadata:
   name: ghostfolio
   annotations:
     external-dns/is-public: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/icon: finance
     hajimari.io/group: finance
