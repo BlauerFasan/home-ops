@@ -7,4 +7,4 @@ resources:
   - ./data-pvc.yaml
   - ./helmrelease.yaml
   - ./ingress.yaml
-  - ./secret.sops.yaml
+  - ./secrets.sops.yaml
