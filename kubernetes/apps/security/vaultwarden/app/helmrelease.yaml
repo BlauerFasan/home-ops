@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: vaultwarden/server
-              tag: 1.32.1-alpine
+              tag: 1.32.2-alpine
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
