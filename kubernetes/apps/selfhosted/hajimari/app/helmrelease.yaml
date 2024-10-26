@@ -60,10 +60,6 @@ spec:
               url: 'https://pve-cluster-1.graf.homes/'
               icon: 'mdi:server'
               info: 'This is the Proxmox Cluster'
-            - name: Gitlab
-              url: 'https://gitlab.graf.homes/'
-              icon: 'mdi:gitlab'
-              info: 'This is Source Code Server'
         - group: network
           apps:
             - name: Unifi-Dreammachine
