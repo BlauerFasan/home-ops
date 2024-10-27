@@ -5,13 +5,13 @@ metadata:
   name: stirling-pdf
   annotations:
     external-dns/is-public: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/icon: ph:file-pdf-bold
     hajimari.io/group: services
     hajimari.io/appName: PDF-Tools
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-internal-default-forwardauth@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-forwardauth@kubernetescrd"
 spec:
   ingressClassName: "traefik"
   tls:
@@ -29,10 +29,10 @@ spec:
                 name: stirling-pdf
                 port:
                   number: 8080
-          # - path: /outpost.goauthentik.io/
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: authentik-authentik
-          #       port:
-          #         number: 9000
+          - path: /outpost.goauthentik.io/
+            pathType: Prefix
+            backend:
+              service:
+                name: security-ak-outpost-authentik-embedded-outpost
+                port:
+                  number: 9000
