@@ -72,7 +72,7 @@ spec:
               SMTP_HOST: smtp-relay.networking.svc.cluster.local.
               SMTP_PORT: 25
               SMTP_SECURITY: "off"
-              SMTP_FROM: noreply@${SECRET_MAIL_DOMAIN}
+              SMTP_FROM: noreply@${SECRET_DOMIAN_3}
               SMTP_FROM_NAME: Vaultwarden
             envFrom:
               - secretRef:
