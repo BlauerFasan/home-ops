@@ -10,4 +10,4 @@ resources:
   - ./ghostfolio/ks.yaml
   - ./hajimari/ks.yaml
   # - ./monica/ks.yaml
-  - ./paperless/ks.yaml
+  # - ./paperless/ks.yaml
