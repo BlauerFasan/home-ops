@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${LOCAL_LAN_NAS}"
-    path: /volume1/dev/documents
+    path: /volume1/documents
   mountOptions:
     # - nfsvers=4.1
     - tcp
