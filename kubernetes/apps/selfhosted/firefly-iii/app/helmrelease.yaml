@@ -48,7 +48,7 @@ spec:
           app:
             image:
               repository: fireflyiii/core
-              tag: version-6.1.19
+              tag: version-6.1.21
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
