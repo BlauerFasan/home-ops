@@ -7,8 +7,8 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./gotenberg/ks.yaml
-  # - ./mealie/ks.yaml
+  - ./mealie/ks.yaml
   - ./stirling-pdf/ks.yaml
   - ./tika/ks.yaml
   - ./unifi/ks.yaml
-  - ./vikunja/ks.yaml
+  # - ./vikunja/ks.yaml

@@ -13,7 +13,5 @@ configMapGenerator:
     files:
       - ./config/Caddyfile
       - ./config/config.yml
-patchesStrategicMerge:
-  - ./patches/postgres.yaml
 generatorOptions:
   disableNameSuffixHash: true

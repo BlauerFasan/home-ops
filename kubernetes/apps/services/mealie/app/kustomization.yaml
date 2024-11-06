@@ -8,5 +8,3 @@ resources:
   - ./ingress.yaml
   - ./secrets.sops.yaml
   - ../../../../templates/volsync
-# patchesStrategicMerge:
-#   - ./patches/postgres.yaml

@@ -38,19 +38,25 @@ spec:
         containers:
           app:
             image:
-              repository: vikunja/api
-              tag: 0.22.1@sha256:c9415431e6235229302bb8f9ee6660b74c24859d1e8adbc4a3e25bd418604b57
+              repository: docker.io/vikunja/vikunja
+              tag: 0.24.4@sha256:c93c58841215592c51a40fa978da25efadd1fff2460b42443c344132f322eef1
 
             env:
               VIKUNJA_SERVICE_TIMEZONE: ${CLUSTER_TIMEZONE}
-              VIKUNJA_SERVICE_FRONTENDURL: yarukoto.${SECRET_DOMAIN}
+              VIKUNJA_SERVICE_PUBLICURL: yarukoto.${SECRET_DOMAIN}
+              VIKUNJA_SERVICE_ENABLETASKATTACHMENTS: true
               VIKUNJA_SERVICE_ENABLEREGISTRATION: true
+              VIKUNJA_SERVICE_ENABLEEMAILREMINDERS: true
               VIKUNJA_DEFAULTSETTINGS_WEEK_START: 1
               VIKUNJA_DEFAULTSETTINGS_TIMEZONE: ${CLUSTER_TIMEZONE}
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.networking.svc.cluster.local.
               VIKUNJA_MAILER_PORT: "25"
-              VIKUNJA_MAILER_FROMEMAIL: Vikunja <yarukoto@${SECRET_MAIL_DOMAIN}>
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <noreply@${SECRET_MAIL_DOMAIN}>
+              VIKUNJA_CACHE_ENABLED: 1
+              VIKUNJA_CACHE_TYPE: redis
+              VIKUNJA_REDIS_ENABLED: true
+              VIKUNJA_REDIS_HOST: dragonfly.database.svc.cluster.local:6379
             envFrom:
               - secretRef:
                   name: vikunja-secret
@@ -92,7 +98,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8080
+            port: 3456
 
     persistence:
       config:
@@ -111,12 +117,3 @@ spec:
             app:
               - path: /etc/vikunja/config.yml
                 subPath: config.yml
-      caddy-config:
-        enabled: true
-        type: configMap
-        name: vikunja-configmap
-        advancedMounts:
-          vikunja:
-            proxy:
-              - path: /etc/caddy/Caddyfile
-                subPath: Caddyfile
