@@ -81,7 +81,7 @@ spec:
 
     worker:
       name: worker
-      replicas: 2
+      replicas: 0
 
       resources:
         requests:
