@@ -13,6 +13,7 @@ resource "authentik_provider_oauth2" "paperless-provider" {
   # signing_key                = "ab375600-ac9a-4058-a529-dbbc7d960e7a"
 
   authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow   = data.authentik_flow.default-provider-invalidation-flow.id
   authentication_flow = authentik_flow.passwordless-flow.uuid
 
   property_mappings  = data.authentik_property_mapping_provider_scope.oidc-scopes-paperless.ids

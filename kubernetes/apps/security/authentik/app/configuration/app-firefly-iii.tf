@@ -14,6 +14,7 @@ resource "authentik_provider_proxy" "firefly-provider" {
   name                = "Firefly-iii"
   external_host       = data.sops_file.secrets.data["firefly_endpoint"]
   authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow   = data.authentik_flow.default-provider-invalidation-flow.id
   authentication_flow = authentik_flow.passwordless-flow.uuid
 
   mode                = "forward_single"

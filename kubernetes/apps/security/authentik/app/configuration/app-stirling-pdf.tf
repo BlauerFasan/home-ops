@@ -7,6 +7,7 @@ resource "authentik_provider_proxy" "stirling-provider" {
   name                = "Stirling-PDF"
   external_host       = data.sops_file.secrets.data["stirling_endpoint"]
   authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
+  invalidation_flow   = data.authentik_flow.default-provider-invalidation-flow.id
   authentication_flow = authentik_flow.passwordless-flow.uuid
 
   mode               = "forward_single"
