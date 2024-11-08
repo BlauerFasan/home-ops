@@ -9,9 +9,13 @@ resource "authentik_group" "mealie-admin-group" {
 
 resource "authentik_provider_oauth2" "mealie-provider" {
   name                = "Mealie"
-  client_type         = "public"
+  client_type         = "confidential"
   client_id           = data.sops_file.secrets.data["mealie_client-id"]
+  client_secret       = data.sops_file.secrets.data["mealie_client-secret"]
   redirect_uris       = [data.sops_file.secrets.data["mealie_redirect-url-1"], data.sops_file.secrets.data["mealie_redirect-url-2"]]
+
+  # signing_key                = "ab375600-ac9a-4058-a529-dbbc7d960e7a"
+
   authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
   authentication_flow = authentik_flow.passwordless-flow.uuid
 
