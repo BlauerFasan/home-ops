@@ -68,31 +68,6 @@ spec:
               limits:
                 memory: 300Mi
 
-          frontend:
-            image:
-              repository: vikunja/frontend
-              tag: 0.22.1@sha256:f0223d441997fe29c377d0b476dc4bb2fc091b44b9c24d76b1b88c213df520c5
-
-            resources:
-              requests:
-                cpu: 10m
-                memory: 26Mi
-              limits:
-                memory: 28Mi
-
-          proxy:
-            image:
-              repository: caddy
-              tag: 2.8.4-alpine@sha256:33937b9d51461ea87794350c1c09ce53f327802508929d78f3b5642533f2f7db
-              pullPolicy: IfNotPresent
-
-            resources:
-              requests:
-                cpu: 15m
-                memory: 30Mi
-              limits:
-                memory: 100Mi
-
     service:
       app:
         controller: *app

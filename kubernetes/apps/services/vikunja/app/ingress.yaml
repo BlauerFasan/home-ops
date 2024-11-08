@@ -30,4 +30,4 @@ spec:
               service:
                 name: vikunja
                 port:
-                  number: 8080
+                  number: 3456
