@@ -11,4 +11,4 @@ resources:
   - ./stirling-pdf/ks.yaml
   - ./tika/ks.yaml
   - ./unifi/ks.yaml
-  # - ./vikunja/ks.yaml
+  - ./vikunja/ks.yaml
