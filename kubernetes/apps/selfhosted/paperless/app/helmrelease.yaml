@@ -84,7 +84,8 @@ spec:
               PAPERLESS_OCR_LANGUAGE: deu
               PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
               #Redis
-              PAPERLESS_REDIS: redis://dragonfly.database.svc.cluster.local.:6379
+              PAPERLESS_REDIS: redis://dragonfly.database.svc.cluster.local.:6379/2
+              PAPERLESS_REDIS_PREFIX: home
               #Tika & Gotenberg
               PAPERLESS_TIKA_ENABLED: 1
               PAPERLESS_TIKA_ENDPOINT: http://tika.serivces.svc.cluster.local:9998
