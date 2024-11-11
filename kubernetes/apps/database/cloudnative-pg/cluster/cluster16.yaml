@@ -56,31 +56,31 @@ spec:
           key: MINIO_SECRET_KEY
 
   bootstrap:
-    pg_basebackup:
-      source: postgres15
+    recovery:
+      source: &previous-cluster postgres14-v1
   externalClusters:
-  #   - name: *previous-cluster
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 8
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: http://minio.minio.svc.cluster.local:9000
-  #       serverName: postgres-v3
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: postgres-minio-secret
-  #           key: MINIO_ACCESS_KEY
-  #         secretAccessKey:
-  #           name: postgres-minio-secret
-  #           key: MINIO_SECRET_KEY
+    - name: *previous-cluster
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgresql/
+        endpointURL: http://minio.minio.svc.cluster.local:9000
+        serverName: postgres14-v1
+        s3Credentials:
+          accessKeyId:
+            name: postgres-minio-secret
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: postgres-minio-secret
+            key: MINIO_SECRET_KEY
 
   # this represents an existing cnpg cluster to migrate from (e.g. upgrading from postgres v14 to postgres v15)
-  - name: postgres15
-    connectionParameters:
-      host: postgres15-rw.database.svc.cluster.local
-      user: postgres
-      dbname: postgres
-    password:
-      name: postgres-superuser
-      key: password
+  # - name: postgres15
+  #   connectionParameters:
+  #     host: postgres15-rw.database.svc.cluster.local
+  #     user: postgres
+  #     dbname: postgres
+  #   password:
+  #     name: postgres-superuser
+  #     key: password
