@@ -82,5 +82,5 @@ spec:
       user: postgres
       dbname: postgres
     password:
-      name: cloudnative-pg-secret
+      name: postgres-superuser
       key: password
