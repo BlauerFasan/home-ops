@@ -3,10 +3,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres16
+  name: postgres15
 spec:
   instances: 3 # set to the number of nodes in the cluster
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.8
   primaryUpdateStrategy: unsupervised
 
   storage:
@@ -46,7 +46,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: http://minio.minio.svc.cluster.local:9000
-      serverName: postgres16-v1
+      serverName: postgres15-v1
       s3Credentials:
         accessKeyId:
           name: postgres-minio-secret
@@ -57,7 +57,7 @@ spec:
 
   bootstrap:
     pg_basebackup:
-      source: postgres15
+      source: postgres14
   externalClusters:
   #   - name: *previous-cluster
   #     barmanObjectStore:
@@ -76,9 +76,9 @@ spec:
   #           key: MINIO_SECRET_KEY
 
   # this represents an existing cnpg cluster to migrate from (e.g. upgrading from postgres v14 to postgres v15)
-  - name: postgres15
+  - name: postgres14
     connectionParameters:
-      host: postgres15-rw.default.svc.cluster.local
+      host: postgres14-rw.default.svc.cluster.local
       user: postgres
       dbname: postgres
     password:
