@@ -10,7 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/appName: "unifi"
-    hajimari.io/group: "services"
+    hajimari.io/group: "network"
     hajimari.io/icon: "wifi"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"

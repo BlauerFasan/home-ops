@@ -7,7 +7,7 @@ metadata:
     external-dns/is-public: "false"
     hajimari.io/enable: "true"
     hajimari.io/icon: shield-lock-outline
-    hajimari.io/group: services
+    hajimari.io/group: server
     hajimari.io/appName: vaultwarden-admin
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-internal-secure-noauth@kubernetescrd"

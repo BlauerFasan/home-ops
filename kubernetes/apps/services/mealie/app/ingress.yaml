@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/icon: "silverware-clean"
-    hajimari.io/group: home
+    hajimari.io/group: services
     hajimari.io/appName: mealie
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
