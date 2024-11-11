@@ -26,7 +26,7 @@ spec:
 
   postgresql:
     parameters:
-      max_connections: "300"
+      max_connections: "600"
       # max_slot_wal_keep_size: 20GB
       shared_buffers: 512MB
       timezone: ${CLUSTER_TIMEZONE}
