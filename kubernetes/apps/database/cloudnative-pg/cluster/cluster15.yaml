@@ -81,6 +81,7 @@ spec:
       host: postgres14-rw.database.svc.cluster.local
       user: postgres
       dbname: postgres
+      sslmode: require
     password:
       name: postgres-superuser
       key: password
