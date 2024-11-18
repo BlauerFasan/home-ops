@@ -72,6 +72,14 @@
       },
       "separateMinorPatch": true
     },
+    {
+      "packagePatterns": ["^minio"],
+      "versioning": "regex:^RELEASE\\.(?<major>\\d{4})-(?<minor>\\d{2})-(?<patch>\\d{2})"
+    },
+    {
+      "packagePatterns": ["^fireflyiii"],
+      "versioning": "regex:^version-(?<major>).(?<minor>).(?<patch>)"
+    },
     // commit message topics
     {
       "matchDatasources": ["helm"],
