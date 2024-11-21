@@ -6,3 +6,4 @@ namespace: services
 resources:
   - ./helmrelease.yaml
   - ./ingress.yaml
+  - ../../../../templates/gatus/guarded

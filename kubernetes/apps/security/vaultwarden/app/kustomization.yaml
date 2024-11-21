@@ -8,3 +8,4 @@ resources:
   - ./ingress-admin.yaml
   - ./secrets.sops.yaml
   - ../../../../templates/volsync
+  - ../../../../templates/gatus/guarded

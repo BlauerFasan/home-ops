@@ -22,3 +22,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 10m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: pdf
+      GATUS_GROUP: services

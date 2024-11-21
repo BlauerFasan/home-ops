@@ -27,3 +27,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 10Gi
+      GATUS_SUBDOMAIN: unifi
+      GATUS_DOMIAN: ${SECRET_DOMAIN_2}
+      GATUS_GROUP: services
+
