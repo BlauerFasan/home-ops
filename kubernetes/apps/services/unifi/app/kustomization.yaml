@@ -6,4 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./ingress.yaml
   - ../../../../templates/volsync
-  - ../../../../templates/gatus/guarded
+  # - ../../../../templates/gatus/guarded
