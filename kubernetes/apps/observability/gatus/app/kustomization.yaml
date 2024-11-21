@@ -6,7 +6,7 @@ resources:
   - ./helmrelease.yaml
   - ./ingress.yaml
   - ./rbac.yaml
-  - ./secret.sops.yaml
+  - ./secrets.sops.yaml
 configMapGenerator:
   - name: gatus-configmap
     files:
