@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gatus
+  annotations:
+    external-dns/is-public: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: mdi:list-status
+    hajimari.io/group: Monitoring
+    hajimari.io/appName: Kansatsu
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
+    # traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-forwardauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "kansatsu.${SECRET_DOMAIN_2}"
+      secretName: "kansatsu.${SECRET_DOMAIN_2//./-}-prod-tls"
+  rules:
+    - host: kansatsu.${SECRET_DOMAIN_2}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gatus
+                port:
+                  number: 8080

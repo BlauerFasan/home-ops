@@ -8,3 +8,4 @@ resources:
   - ./helmrelease.yaml
   - ./ingress.yaml
   - ./secrets.sops.yaml
+  - ../../../../templates/gatus/guarded
