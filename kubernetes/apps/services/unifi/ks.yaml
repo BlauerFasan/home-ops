@@ -29,5 +29,6 @@ spec:
       VOLSYNC_CAPACITY: 10Gi
       GATUS_SUBDOMAIN: unifi
       GATUS_DOMIAN: ${SECRET_DOMAIN_2}
+      GATUS_PATH: /manage/account/login?redirect=%2Fmanage
       GATUS_GROUP: services
 
