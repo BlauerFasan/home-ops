@@ -32,7 +32,7 @@ spec:
       - 2c0f:f248::/32
       # include rfc1918 ranges since traefik chains do not support OR operations
       # https://github.com/traefik/traefik/issues/6007
-      - 10.52.0.0/16
-      - 10.53.0.0/16
+      - 10.66.0.0/16
+      - 10.99.0.0/16
       - 172.30.100.0/22
       - 2001:1620:552e::/48
