@@ -8,6 +8,7 @@ resources:
   - ./ingress.yaml
   - ./secrets.sops.yaml
   - ../../../../templates/volsync
+  - ../../../../templates/gatus/guarded
 configMapGenerator:
   - name: vikunja-configmap
     files:
