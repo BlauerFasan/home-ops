@@ -4,11 +4,16 @@ resource "authentik_group" "paperless-group" {
 }
 
 resource "authentik_provider_oauth2" "paperless-provider" {
-  name                = "Paperless Home"
-  client_type         = "confidential"
-  client_id           = data.sops_file.secrets.data["paperless_client-id"]
-  client_secret       = data.sops_file.secrets.data["paperless_client-secret"]
-  redirect_uris       = [data.sops_file.secrets.data["paperless_redirect-url"]]
+  name                  = "Paperless Home"
+  client_type           = "confidential"
+  client_id             = data.sops_file.secrets.data["paperless_client-id"]
+  client_secret         = data.sops_file.secrets.data["paperless_client-secret"]
+  allowed_redirect_uris = [
+    {
+      matching_mode = "strict",
+      url           = data.sops_file.secrets.data["paperless_redirect-url"],
+    }
+ ]
 
   # signing_key                = "ab375600-ac9a-4058-a529-dbbc7d960e7a"
 
@@ -29,7 +34,7 @@ resource "authentik_application" "paperless-app" {
   slug              = "paperless-home"
   protocol_provider = authentik_provider_oauth2.paperless-provider.id
   open_in_new_tab   = true
-  meta_icon         = ""
+  meta_icon         = "https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/refs/heads/dev/resources/logo/web/svg/square.svg"
   meta_launch_url   = data.sops_file.secrets.data["paperless_endpoint"]
 }
 
