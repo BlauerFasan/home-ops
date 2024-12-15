@@ -55,11 +55,10 @@ spec:
           name: postgres-minio-secret
           key: MINIO_SECRET_KEY
 
-  bootstrap:
-    recovery:
-      source: postgres16-v1
-      recoveryTarget:
-        targetTime: "2024-12-15T01:00:00"
+  recovery:
+    source: postgres16-v1
+    recoveryTarget:
+      targetTime: "2024-12-15T01:00:00"
 
   externalClusters:
     - name: postgres16-v1
