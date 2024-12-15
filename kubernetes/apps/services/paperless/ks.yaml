@@ -29,4 +29,5 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: dms
+      GATUS_DOMAIN: ${SECRET_DOMAIN_2}
       GATUS_GROUP: services
