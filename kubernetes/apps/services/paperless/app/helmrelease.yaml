@@ -32,7 +32,7 @@ spec:
 
   values:
     controllers:
-      paperless:
+      paperless-service:
         strategy: RollingUpdate
         replicas: 1
         type: statefulset
