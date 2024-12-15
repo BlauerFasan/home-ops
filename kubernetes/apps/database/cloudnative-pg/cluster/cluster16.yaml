@@ -57,9 +57,12 @@ spec:
 
   bootstrap:
     recovery:
-      source: &previous-cluster postgres16-v1
+      source: postgres16-v1
+      recoveryTarget:
+        targetTime: "2024-12-15T01:00:00"
+
   externalClusters:
-    - name: *previous-cluster
+    - name: postgres16-v1
       barmanObjectStore:
         wal:
           compression: bzip2
