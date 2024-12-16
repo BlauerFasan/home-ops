@@ -44,7 +44,7 @@ spec:
 
       initContainers:
         - name: init-db
-          image: ghcr.io/onedr0p/postgres-init:16.3@sha256:9c136223fb4e05b0ca24e2350c2dc45843110d0e1d09615c52c9a037628c09fa
+          image: ghcr.io/onedr0p/postgres-init:16.6@sha256:c1d3a845d47fe1aeebd110fefb5f43f54c4735aec1d2b0c01de8d4d5e8cdd6a4
           envFrom:
             - secretRef:
                   name: authentik-init-db
