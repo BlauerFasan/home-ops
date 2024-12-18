@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+vars:
+  TALHELPER_CLUSTER_DIR: '{{.KUBERNETES_DIR}}/bootstrap/talos/clusterconfig'
+  TALHELPER_CONFIG_FILE: '{{.KUBERNETES_DIR}}/bootstrap/talos/talconfig.yaml'
+  TALOSCONFIG: '{{.TALHELPER_CLUSTER_DIR}}/talosconfig'
+
+env:
+  TALOSCONFIG: '{{.TALOSCONFIG}}'
+
+tasks:
+
+  scale-apps-postgres-down:
+    desc: Scale down to 0 the number of instances of all database useages apps
+    cmds:
+      - cmd: kubectl scale --replicas=0 deployment/gatus -n observability
+      - cmd: kubectl scale --replicas=0 statefulset/paperless -n selfhosted
+      - cmd: kubectl scale --replicas=0 statefulset/paperless-service -n services
+      - cmd: kubectl scale --replicas=0 deployment/firefly-iii -n selfhosted
+      - cmd: kubectl scale --replicas=0 deployment/ghostfolio -n selfhosted
+      - cmd: kubectl scale --replicas=0 deployment/mealie -n services
+      - cmd: kubectl scale --replicas=0 deployment/vikunja -n services
+      - cmd: kubectl scale --replicas=0 deployment/vaultwarden -n security
+      - cmd: kubectl scale --replicas=0 deployment/authentik-worker -n security
+      - cmd: kubectl scale --replicas=0 deployment/authentik-server -n security
+
+  scale-apps-postgres-up:
+    desc: Scale up to 1 the number of instances of all database useages apps
+    cmds:
+      - cmd: kubectl scale --replicas=1 deployment/authentik-server -n security
+      - cmd: kubectl scale --replicas=1 deployment/authentik-worker -n security
+      - cmd: kubectl scale --replicas=1 statefulset/paperless -n selfhosted
+      - cmd: kubectl scale --replicas=1 statefulset/paperless-service -n services
+      - cmd: kubectl scale --replicas=1 deployment/firefly-iii -n selfhosted
+      - cmd: kubectl scale --replicas=1 deployment/ghostfolio -n selfhosted
+      - cmd: kubectl scale --replicas=1 deployment/mealie -n services
+      - cmd: kubectl scale --replicas=1 deployment/vikunja -n services
+      - cmd: kubectl scale --replicas=1 deployment/vaultwarden -n security
+      - cmd: kubectl scale --replicas=1 deployment/gatus -n observability
