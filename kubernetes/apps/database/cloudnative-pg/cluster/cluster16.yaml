@@ -46,7 +46,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: http://minio.minio.svc.cluster.local:9000
-      serverName: postgres16-v2
+      serverName: postgres16-v3
       s3Credentials:
         accessKeyId:
           name: postgres-minio-secret
@@ -55,28 +55,28 @@ spec:
           name: postgres-minio-secret
           key: MINIO_SECRET_KEY
 
-  # bootstrap:
-  #   recovery:
-  #     source: postgres16-v1
-  #     recoveryTarget:
-  #       targetTime: "2024-12-15T01:00:00"
+  bootstrap:
+    recovery:
+      source: postgres16-v2
+      recoveryTarget:
+        targetTime: "2024-12-18T20:00:00"
 
-  # externalClusters:
-  #   - name: postgres16-v1
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 8
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: http://minio.minio.svc.cluster.local:9000
-  #       serverName: postgres16-v1
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: postgres-minio-secret
-  #           key: MINIO_ACCESS_KEY
-  #         secretAccessKey:
-  #           name: postgres-minio-secret
-  #           key: MINIO_SECRET_KEY
+  externalClusters:
+    - name: postgres16-v2
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgresql/
+        endpointURL: http://minio.minio.svc.cluster.local:9000
+        serverName: postgres16-v2
+        s3Credentials:
+          accessKeyId:
+            name: postgres-minio-secret
+            key: MINIO_ACCESS_KEY
+          secretAccessKey:
+            name: postgres-minio-secret
+            key: MINIO_SECRET_KEY
 
   # this represents an existing cnpg cluster to migrate from (e.g. upgrading from postgres v14 to postgres v15)
   # - name: postgres15
