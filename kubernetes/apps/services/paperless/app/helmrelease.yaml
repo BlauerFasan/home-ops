@@ -68,7 +68,10 @@ spec:
               PAPERLESS_DATA_DIR: /library/data
               PAPERLESS_EXPORT_DIR: /library/export
               #Import Folder Config
-              PAPERLESS_CONSUMER_POLLING: "60"
+              PAPERLESS_CONSUMER_POLLING: "120"
+              PAPERLESS_CONSUMER_POLLING_RETRY_COUNT: "6"
+              PAPERLESS_CONSUMER_POLLING_RETRY_DELAY: "10"
+              PAPERLESS_CONSUMER_INOTIFY_DELAY: "10"
               PAPERLESS_CONSUMER_RECURSIVE: "true"
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
               # OIDC
