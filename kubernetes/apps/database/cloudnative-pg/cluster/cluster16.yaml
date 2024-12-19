@@ -1,12 +1,12 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/postgresql.cnpg.io/cluster_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgres16
 spec:
   instances: 3 # set to the number of nodes in the cluster
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.6
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.6@sha256:d7822fa6eba284a6d3d035d51a51de22147bc5e72d87aa93e7dd9fa87455ed5c
   primaryUpdateStrategy: unsupervised
 
   storage:
@@ -57,18 +57,17 @@ spec:
 
   bootstrap:
     recovery:
-      source: postgres16-v2
-      recoveryTarget:
-        targetTime: "2024-12-18T20:00:00"
+      source: &previousCluster postgres16-v2
 
   externalClusters:
-    - name: postgres16-v2
+    - name: *previousCluster
       barmanObjectStore:
         wal:
           compression: bzip2
           maxParallel: 8
         destinationPath: s3://postgresql/
         endpointURL: http://minio.minio.svc.cluster.local:9000
+        serverName: *previousCluster
         s3Credentials:
           accessKeyId:
             name: postgres-minio-secret
