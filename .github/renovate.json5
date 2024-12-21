@@ -111,7 +111,7 @@
     {
       "description": ["Firefly III Group"],
       "groupName": "Firefly III",
-      "matchDepNames": ["quay.io/minio/minio"],
+      "matchDepNames": ["docker.io/fireflyiii/core"],
       "versioning": "regex:^version-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
