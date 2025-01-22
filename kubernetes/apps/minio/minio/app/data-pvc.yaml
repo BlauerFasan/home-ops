@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${LOCAL_LAN_NAS}"
-    path: /volume1/minio
+    path: /mnt/tank/minio
   mountOptions:
     # - nfsvers=4.1
     - tcp

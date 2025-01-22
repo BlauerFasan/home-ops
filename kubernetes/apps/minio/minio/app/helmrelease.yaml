@@ -72,6 +72,12 @@ spec:
               readiness: *probes
 
             securityContext:
+              runAsUser: 1503
+              runAsGroup: 3003
+              fsGroup: 1503
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups: [100]
+
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
