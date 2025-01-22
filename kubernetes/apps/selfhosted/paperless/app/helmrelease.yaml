@@ -63,7 +63,6 @@ spec:
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
               #UserIDs
-              USERMAP_UID: 1503
               USERMAP_GID: 3003
               #Folder Config
               PAPERLESS_CONSUMPTION_DIR: /library/consume
@@ -111,9 +110,10 @@ spec:
                 memory: 5Gi
 
             securityContext:
-              runAsUser: 1503
+              runAsUser: 0
               runAsGroup: 3003
-              fsGroup: 1503
+              fsGroup: 3003
+              supplementalGroups: [65534]
               fsGroupChangePolicy: OnRootMismatch
 
     service:
