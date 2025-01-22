@@ -107,6 +107,13 @@ spec:
               limits:
                 memory: 5Gi
 
+            securityContext:
+              runAsUser: 1501
+              runAsGroup: 3001
+              fsGroup: 1501
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups: [100]
+
     service:
       main:
         controller: *app
