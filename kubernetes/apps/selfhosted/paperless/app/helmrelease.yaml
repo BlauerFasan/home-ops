@@ -62,8 +62,6 @@ spec:
               PAPERLESS_PORT: &port 8000
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
-              #UserIDs
-              # USERMAP_GID: 3003
               #Folder Config
               PAPERLESS_CONSUMPTION_DIR: /library/consume
               PAPERLESS_MEDIA_ROOT: /library/media
@@ -108,13 +106,6 @@ spec:
                 memory: 1Gi
               limits:
                 memory: 5Gi
-
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 3003
-              fsGroup: 3003
-              supplementalGroups: [65534]
-              fsGroupChangePolicy: OnRootMismatch
 
     service:
       main:
