@@ -63,7 +63,7 @@ spec:
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
               #UserIDs
-              USERMAP_GID: 3003
+              # USERMAP_GID: 3003
               #Folder Config
               PAPERLESS_CONSUMPTION_DIR: /library/consume
               PAPERLESS_MEDIA_ROOT: /library/media
