@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2025-02-03T21-03-04Z@sha256:a62e44a7db506b8ed114a44e67b4996c4f1ecca981d9c6e40aa2581334999313
+              tag: RELEASE.2025-02-18T16-25-55Z@sha256:1df91be8d6a6146001cd6be2569a12785a8ece583b511f56ebed08f1e65d3611
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
