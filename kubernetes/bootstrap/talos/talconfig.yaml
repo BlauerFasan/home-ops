@@ -1,18 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.1
+talosVersion: v1.9.5
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.0
+kubernetesVersion: v1.32.3
 
 clusterName: "home-kubernetes"
-endpoint: https://172.30.100.165:6443
+endpoint: https://172.30.100.160:6443
 clusterPodNets:
   - "10.66.0.0/16"
 clusterSvcNets:
   - "10.99.0.0/16"
 additionalApiServerCertSans: &sans
-  - "172.30.100.165"
+  - "172.30.100.160"
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
 
@@ -21,98 +21,98 @@ cniConfig:
   name: none
 
 nodes:
-  - hostname: "chrb-vmp-ms1"
-    ipAddress: "172.30.100.132"
+  - hostname: "chrb-vm-ms1"
+    ipAddress: "172.30.100.131"
     installDisk: "/dev/vda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "06:9d:65:77:fa:a1"
+          hardwareAddr: "0a:9d:65:77:fa:a1"
         dhcp: false
         addresses:
-          - "172.30.100.132/26"
+          - "172.30.100.131/26"
         routes:
           - network: 0.0.0.0/0
             gateway: "172.30.100.129"
         mtu: 1500
         vip:
-          ip: "172.30.100.165"
-  - hostname: "chrb-vmp-ms2"
-    ipAddress: "172.30.100.142"
+          ip: "172.30.100.160"
+  - hostname: "chrb-vm-ms2"
+    ipAddress: "172.30.100.141"
     installDisk: "/dev/vda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "06:9d:65:77:fb:a1"
+          hardwareAddr: "0a:9d:65:77:fb:a1"
         dhcp: false
         addresses:
-          - "172.30.100.142/26"
+          - "172.30.100.141/26"
         routes:
           - network: 0.0.0.0/0
             gateway: "172.30.100.129"
         mtu: 1500
         vip:
-          ip: "172.30.100.165"
-  - hostname: "chrb-vmp-ms3"
-    ipAddress: "172.30.100.152"
+          ip: "172.30.100.160"
+  - hostname: "chrb-vm-ms3"
+    ipAddress: "172.30.100.151"
     installDisk: "/dev/vda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "06:9d:65:77:fc:a1"
+          hardwareAddr: "0a:9d:65:77:fc:a1"
         dhcp: false
         addresses:
-          - "172.30.100.152/26"
+          - "172.30.100.151/26"
         routes:
           - network: 0.0.0.0/0
             gateway: "172.30.100.129"
         mtu: 1500
         vip:
-          ip: "172.30.100.165"
-  - hostname: "chrb-vmp-nd1"
-    ipAddress: "172.30.100.136"
+          ip: "172.30.100.160"
+  - hostname: "chrb-vm-nd1"
+    ipAddress: "172.30.100.135"
     installDisk: "/dev/vda"
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/44094505f553b2341580d87c83653f3aa5cbef305443e9b981236cb66396b31d
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "06:9d:65:77:fa:b1"
+          hardwareAddr: "0a:9d:65:77:fa:b1"
         dhcp: false
         addresses:
-          - "172.30.100.136/26"
+          - "172.30.100.135/26"
         routes:
           - network: 0.0.0.0/0
             gateway: "172.30.100.129"
         mtu: 1500
-  - hostname: "chrb-vmp-nd2"
-    ipAddress: "172.30.100.146"
+  - hostname: "chrb-vm-nd2"
+    ipAddress: "172.30.100.145"
     installDisk: "/dev/vda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "06:9d:65:77:fb:b1"
+          hardwareAddr: "0a:9d:65:77:fb:b1"
         dhcp: false
         addresses:
-          - "172.30.100.146/26"
+          - "172.30.100.145/26"
         routes:
           - network: 0.0.0.0/0
             gateway: "172.30.100.129"
         mtu: 1500
-  - hostname: "chrb-vmp-nd3"
-    ipAddress: "172.30.100.156"
+  - hostname: "chrb-vm-nd3"
+    ipAddress: "172.30.100.155"
     installDisk: "/dev/vda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "06:9d:65:77:fc:b1"
+          hardwareAddr: "0a:9d:65:77:fc:b1"
         dhcp: false
         addresses:
-          - "172.30.100.156/26"
+          - "172.30.100.155/26"
         routes:
           - network: 0.0.0.0/0
             gateway: "172.30.100.129"
