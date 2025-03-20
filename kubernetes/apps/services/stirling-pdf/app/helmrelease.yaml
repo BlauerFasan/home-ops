@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.6.1
+      version: 3.7.3
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/stirling-tools/s-pdf
-              tag: 0.43.2@sha256:aed747ddf5302584c43db94a08a2c28054797b6815d9f32ddb4aafaa1dff3bd4
+              tag: 0.44.3@sha256:e78ceedb616a73d39eff6761247387262b6d8ded9e4d9bab1a0529d8f7ceae0c
               pullPolicy: IfNotPresent
 
             env:

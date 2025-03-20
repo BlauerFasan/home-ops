@@ -6,10 +6,10 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./gotenberg/ks.yaml
+  - ./gotenberg/ks.yaml
   # - ./mealie/ks.yaml
   # - ./paperless/ks.yaml
   # - ./stirling-pdf/ks.yaml
-  # - ./tika/ks.yaml
+  - ./tika/ks.yaml
   # - ./unifi/ks.yaml
   # - ./vikunja/ks.yaml
