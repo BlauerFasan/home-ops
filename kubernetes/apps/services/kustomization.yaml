@@ -8,8 +8,8 @@ resources:
   # Flux-Kustomizations
   - ./gotenberg/ks.yaml
   # - ./mealie/ks.yaml
-  # - ./paperless/ks.yaml
+  - ./paperless/ks.yaml
   # - ./stirling-pdf/ks.yaml
   - ./tika/ks.yaml
-  # - ./unifi/ks.yaml
+  - ./unifi/ks.yaml
   # - ./vikunja/ks.yaml
