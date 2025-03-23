@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.6.1
+      version: 3.7.3
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -40,8 +40,8 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.6"
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "17.4"
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: docker.io/ghostfolio/ghostfolio
-              tag: 2.144.0@sha256:27be4d7917ed1bd9535012877d49cef801256e1a42eb28233479f2aa442b485a
+              tag: 2.147.0@sha256:4821efaf23c59bbb31d3672eac03458c32ad51421568a62d7c59e257668fd859
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
