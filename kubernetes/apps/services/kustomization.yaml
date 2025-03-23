@@ -9,7 +9,7 @@ resources:
   - ./gotenberg/ks.yaml
   # - ./mealie/ks.yaml
   # - ./paperless/ks.yaml
-  # - ./stirling-pdf/ks.yaml
+  - ./stirling-pdf/ks.yaml
   - ./tika/ks.yaml
-  # - ./unifi/ks.yaml
-  # - ./vikunja/ks.yaml
+  - ./unifi/ks.yaml
+  - ./vikunja/ks.yaml
