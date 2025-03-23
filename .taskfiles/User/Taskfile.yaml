@@ -43,12 +43,12 @@ tasks:
   database-dump:
     desc: Create a database dump for all database useages apps
     cmds:
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d authentik > ~/dbbackup/authentik.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d firefly-iii > ~/dbbackup/firefly-iii.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d gatus > ~/dbbackup/gatus.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d ghostfolio > ~/dbbackup/ghostfolio.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d mealie > ~/dbbackup/mealie.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d paperless > ~/dbbackup/paperless.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d paperless_service > ~/dbbackup/paperless_service.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d vaultwarden > ~/dbbackup/vaultwarden.dump
-      - cmd: kubectl exec postgres16-3 -c postgres -n database -- pg_dump -Fc -d vikunja > ~/dbbackup/vikunja.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d authentik > ~/dbbackup/authentik.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d firefly-iii > ~/dbbackup/firefly-iii.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d gatus > ~/dbbackup/gatus.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d ghostfolio > ~/dbbackup/ghostfolio.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d mealie > ~/dbbackup/mealie.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d paperless-home > ~/dbbackup/paperless-home.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d paperless-service > ~/dbbackup/paperless-service.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d vaultwarden > ~/dbbackup/vaultwarden.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d vikunja > ~/dbbackup/vikunja.dump
