@@ -11,9 +11,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/volsync/volsync/app
-  dependsOn:
-    - name: snapshot-controller
-    - name: minio
+  # dependsOn:
+    # - name: snapshot-controller
+    # - name: minio
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
