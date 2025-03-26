@@ -63,8 +63,8 @@ spec:
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
               # Configure user permissions
-              USERMAP_UID: "1000"
-              USERMAP_GID: "1000"
+              USERMAP_UID: "568"
+              USERMAP_GID: "568"
               #Folder Config
               PAPERLESS_CONSUMPTION_DIR: /library/consume
               PAPERLESS_MEDIA_ROOT: /library/media
