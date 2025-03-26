@@ -63,8 +63,8 @@ spec:
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
               # Configure user permissions
-              USERMAP_UID: "568"
-              USERMAP_GID: "568"
+              USERMAP_UID: "1000"
+              USERMAP_GID: "1000"
               #Folder Config
               PAPERLESS_CONSUMPTION_DIR: /library/consume
               PAPERLESS_MEDIA_ROOT: /library/media
@@ -111,9 +111,9 @@ spec:
                 memory: 5Gi
 
             securityContext:
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
               fsGroupChangePolicy: OnRootMismatch
               supplementalGroups: [100]
 
