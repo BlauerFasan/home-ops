@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${LOCAL_LAN_NAS}"
-    path: /mnt/tank/paperless-home
+    path: /mnt/tank/documents/home
   mountOptions:
     # - nfsvers=4.1
     - tcp
