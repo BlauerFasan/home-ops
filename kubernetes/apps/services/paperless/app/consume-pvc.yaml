@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: &pv paperless-service-nfs-data
+  name: &pv paperless-service-nfs-consume
 spec:
   capacity:
     storage: 1Ti
@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: paperless-service-data-v1
+  name: paperless-service-consume-v1
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: paperless-service-nfs-data
+  storageClassName: paperless-service-nfs-consume
   resources:
     requests:
       storage: 1Ti

@@ -63,7 +63,7 @@ spec:
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
               #Folder Config
-              PAPERLESS_CONSUMPTION_DIR: /library/consume
+              PAPERLESS_CONSUMPTION_DIR: /consume
               PAPERLESS_MEDIA_ROOT: /library/media
               PAPERLESS_DATA_DIR: /library/data
               PAPERLESS_EXPORT_DIR: /library/export
@@ -119,3 +119,8 @@ spec:
         existingClaim: paperless-service-data-v1
         globalMounts:
           - path: /library
+      consume:
+        enabled: true
+        existingClaim: paperless-service-consume-v1
+        globalMounts:
+          - path: /consume
