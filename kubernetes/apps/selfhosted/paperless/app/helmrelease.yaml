@@ -66,7 +66,7 @@ spec:
               USERMAP_UID: "1000"
               USERMAP_GID: "1000"
               #Folder Config
-              PAPERLESS_CONSUMPTION_DIR: /library/consume
+              PAPERLESS_CONSUMPTION_DIR: /consume
               PAPERLESS_MEDIA_ROOT: /library/media
               PAPERLESS_DATA_DIR: /library/data
               PAPERLESS_EXPORT_DIR: /library/export
@@ -75,9 +75,6 @@ spec:
               PAPERLESS_CONSUMER_POLLING: "60"
               PAPERLESS_CONSUMER_RECURSIVE: "true"
               PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
-              #Remote User
-              # PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-              # PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_X_AUTHENTIK_USERNAME
               # OIDC
               PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
               PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
@@ -123,3 +120,8 @@ spec:
         existingClaim: paperless-data-v1
         globalMounts:
           - path: /library
+      consume:
+        enabled: true
+        existingClaim: paperless-consume-v1
+        globalMounts:
+          - path: /consume
