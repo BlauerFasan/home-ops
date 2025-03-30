@@ -5,7 +5,7 @@ metadata:
   name: &pv paperless-service-nfs-consume
 spec:
   capacity:
-    storage: 1Ti
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${LOCAL_LAN_NAS}"
-    path: /mnt/tank/paperless-service
+    path: /mnt/tank/documents/consume-servie
   mountOptions:
     # - nfsvers=4.1
     - tcp
@@ -33,4 +33,4 @@ spec:
   storageClassName: paperless-service-nfs-consume
   resources:
     requests:
-      storage: 1Ti
+      storage: 1Gi
