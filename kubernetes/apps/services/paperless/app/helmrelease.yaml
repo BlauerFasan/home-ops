@@ -62,6 +62,9 @@ spec:
               PAPERLESS_PORT: &port 8000
               PAPERLESS_TIME_ZONE: ${CLUSTER_TIMEZONE}
               PAPERLESS_TASK_WORKERS: 2
+              # Configure user permissions
+              USERMAP_UID: "1000"
+              USERMAP_GID: "1000"
               #Folder Config
               PAPERLESS_CONSUMPTION_DIR: /consume
               PAPERLESS_MEDIA_ROOT: /library/media
