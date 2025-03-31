@@ -84,7 +84,7 @@ spec:
         controller: smtp-relay
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: smtp-relay.${SECRET_DOMIAN_3}
+          external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMIAN_3}
           lbipam.cilium.io/ips: ${CLUSTER_LB_SMTP}
         ports:
           http:
@@ -117,3 +117,9 @@ spec:
         globalMounts:
           - path: /cache
 
+      tls:
+        type: secret
+        name: tls.smtp-relay
+        globalMounts:
+          - path: /tls
+            readOnly: true
