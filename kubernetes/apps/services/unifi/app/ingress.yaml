@@ -20,9 +20,6 @@ spec:
     - hosts:
         - "unifi.${SECRET_DOMAIN_2}"
       secretName: "unifi.${SECRET_DOMAIN_2//./-}-prod-tls"
-    - hosts:
-        - "unifi-inform.${SECRET_DOMAIN_2}"
-      secretName: "unifi-inform.${SECRET_DOMAIN_2//./-}-prod-tls"
   rules:
     - host: unifi.${SECRET_DOMAIN_2}
       http:
@@ -34,13 +31,3 @@ spec:
                 name: unifi
                 port:
                   number: 8443
-    - host: unifi-inform.${SECRET_DOMAIN_2}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: unifi
-                port:
-                  number: 8080
