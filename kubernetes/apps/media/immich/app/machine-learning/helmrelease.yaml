@@ -1,0 +1,123 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app immich-machine-learning
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  dependsOn:
+    - name: immich-server
+      namespace: media
+
+  values:
+    controllers:
+      immich-machine-learning:
+        strategy: RollingUpdate
+        replicas: 1
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.131.2@sha256:29836cf73146057ac388546021fff3e00c923e22a28587cceb5108a5e537987d
+
+            env:
+              #General
+              TZ: ${CLUSTER_TIMEZONE}
+
+            envFrom:
+              - configMapRef:
+                  name: immich-configmap
+              - secretRef:
+                  name: immich-secrets
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: &port 3003
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: false
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 4000Mi
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+        pod:
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+
+    service:
+      main:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    persistence:
+      library:
+        type: nfs
+        server: "${LOCAL_LAN_NAS}"
+        path: /mnt/tank/photo
+        globalMounts:
+          - path: /usr/src/app/upload
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /cache
+      geocoding-dump:
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.reverse-geocoding-dump
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

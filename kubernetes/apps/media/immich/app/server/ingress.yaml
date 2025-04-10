@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: immich
+  annotations:
+    external-dns/is-public: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: mdi:image-album
+    hajimari.io/group: home
+    hajimari.io/appName: Immich
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "shashin.${SECRET_DOMAIN}"
+      secretName: "shashin.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: shashin.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: immich-server
+                port:
+                  number: 2283
