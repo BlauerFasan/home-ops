@@ -30,6 +30,8 @@ spec:
       max_slot_wal_keep_size: 20GB
       shared_buffers: 512MB
       timezone: ${CLUSTER_TIMEZONE}
+    shared_preload_libraries:
+      - "vectors.so"
 
   monitoring:
     enablePodMonitor: true
