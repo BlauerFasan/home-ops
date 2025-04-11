@@ -5,7 +5,7 @@ metadata:
   name: immich
   annotations:
     external-dns/is-public: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/icon: mdi:image-album
     hajimari.io/group: home
