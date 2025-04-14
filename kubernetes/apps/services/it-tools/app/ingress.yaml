@@ -5,14 +5,14 @@ metadata:
   name: stirling-pdf
   annotations:
     external-dns/is-public: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/icon: mdi:hammer-wrench
     hajimari.io/group: services
     hajimari.io/appName: IT-Tools
     hajimari.io/description: "A collection of tools for IT professionals. Encryption and decryption of files, QR code generation, and more."
-    # traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    # # traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-forwardauth@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-forwardauth@kubernetescrd"
 
 spec:
   ingressClassName: "traefik"
