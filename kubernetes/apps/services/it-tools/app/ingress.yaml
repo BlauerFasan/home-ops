@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: stirling-pdf
+  name: it-tools
   annotations:
     external-dns/is-public: "false"
     cert-manager.io/cluster-issuer: "letsencrypt-production"
