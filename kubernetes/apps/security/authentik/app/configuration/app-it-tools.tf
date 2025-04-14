@@ -21,7 +21,7 @@ resource "authentik_application" "it-tools-app" {
   slug              = "it-tools"
   protocol_provider = authentik_provider_proxy.it-tools-provider.id
   open_in_new_tab   = true
-  meta_icon         = "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png"
+  meta_icon         = "https://raw.githubusercontent.com/CorentinTh/it-tools/main/.github/logo-dark.png"
   meta_launch_url   = data.sops_file.secrets.data["it-tools_endpoint"]
 }
 
