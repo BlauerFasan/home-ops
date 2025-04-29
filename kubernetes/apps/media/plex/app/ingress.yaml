@@ -5,10 +5,10 @@ metadata:
   name: plex
   annotations:
     external-dns/is-public: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     hajimari.io/enable: "true"
     hajimari.io/appName: "plex"
-    hajimari.io/group: "Home"
+    hajimari.io/group: home
     hajimari.io/icon: "mdi:plex"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"

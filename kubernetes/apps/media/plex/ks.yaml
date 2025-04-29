@@ -27,3 +27,4 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 20Gi
       GATUS_GROUP: services
+      GATUS_PATH: /web/index.html
