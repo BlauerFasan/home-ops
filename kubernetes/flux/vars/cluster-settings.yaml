@@ -9,6 +9,7 @@ data:
   CLUSTER_LB_TRAEFIK: "172.30.100.170"
   CLUSTER_LB_UNIFI: "172.30.100.171"
   CLUSTER_LB_SMTP: "172.30.100.172"
+  CLUSTER_LB_PLEX: "172.30.100.173"
   LOCAL_LAN_NAS: "172.30.100.180"
   POSTGRES_HOST_17: "postgres17-rw.database.svc.cluster.local."
   POSTGRES_HOST_16: "postgres16-rw.database.svc.cluster.local."

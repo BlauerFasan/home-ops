@@ -1,0 +1,106 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app monica
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      monica:
+        replicas: 1
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "17.4"
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: monica-init-db
+
+        containers:
+          app: &bapp
+            image:
+              repository: ghcr.io/monicahq/monica-next
+              tag:  main@sha256:d190010744cd930e4ba44ec624ee62928ee40e74303a6cac15fd5e4c3488d5d6
+
+            env:
+              TZ: ${CLUSTER_TIMEZONE}
+              APP_ENV: production
+              APP_URL: https://kankei.${SECRET_DOMAIN}
+              APP_TRUSTED_PROXIES: "*"
+              APP_DISABLE_SIGNUP: false
+              DEFAULT_MAX_UPLOAD_SIZE: 2000
+              DEFAULT_MAX_STORAGE_SIZE: 4096
+              APP_DEBUG: "false"
+              CACHE_DRIVER: redis
+              QUEUE_CONNECTION: redis
+              REDIS_HOST: dragonfly.database.svc.cluster.local.
+              MAIL_MAILER: smtp
+              MAIL_HOST: smtp-relay.networking.svc.cluster.local.
+              MAIL_PORT: 25
+
+            envFrom:
+              - secretRef:
+                  name: monica-secrets
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128M
+              limits:
+                memory: 256M
+
+          cron:
+            <<: *bapp
+            command:
+              - cron.sh
+
+          queue:
+            <<: *bapp
+            command:
+              - queue.sh
+
+    service:
+      app:
+        controller: monica
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /config
+
