@@ -10,7 +10,7 @@ data:
     endpoints:
       - name: immich-db-postgres
         group: infrastructure
-        url: tcp://immich-db16-rw.medis.svc.cluster.local:5432
+        url: tcp://immich-db16-rw.media.svc.cluster.local:5432
         interval: 1m
         ui:
           hide-url: true

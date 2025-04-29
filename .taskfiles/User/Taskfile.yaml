@@ -53,4 +53,4 @@ tasks:
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d vaultwarden > ~/dbbackup/vaultwarden.dump
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d vikunja > ~/dbbackup/vikunja.dump
       # immich seperate cluster
-      - cmd: kubectl exec immich-db16-1  -c postgres -n database -- pg_dump -Fc -d immich > ~/dbbackup/immich.dump
+      - cmd: kubectl exec immich-db16-1  -c postgres -n media -- pg_dump -Fc -d immich > ~/dbbackup/immich.dump
