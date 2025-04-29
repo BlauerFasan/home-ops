@@ -9,5 +9,5 @@ resources:
   - ./firefly-iii/ks.yaml
   - ./ghostfolio/ks.yaml
   - ./hajimari/ks.yaml
-  # - ./monica/ks.yaml
+  - ./monica/ks.yaml
   - ./paperless/ks.yaml
