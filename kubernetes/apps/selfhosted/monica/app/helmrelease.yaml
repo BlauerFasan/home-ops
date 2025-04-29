@@ -58,7 +58,7 @@ spec:
               APP_ENV: production
               APP_URL: https://kankei.${SECRET_DOMAIN}
               APP_TRUSTED_PROXIES: "*"
-              APP_DISABLE_SIGNUP: false
+              APP_DISABLE_SIGNUP: true
               DEFAULT_MAX_UPLOAD_SIZE: 2000
               DEFAULT_MAX_STORAGE_SIZE: 4096
               APP_DEBUG: "false"
