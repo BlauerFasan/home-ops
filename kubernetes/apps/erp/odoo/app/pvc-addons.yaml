@@ -1,68 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-addons
+  name: odoo-addons-v1
 spec:
   accessModes:
     - ReadWriteOnce
-  dataSourceRef:
-    kind: ReplicationDestination
-    apiGroup: volsync.backube
-    name: "odoo-addons-bootstrap"
   resources:
     requests:
       storage: 2Gi
-  storageClassName: ceph-block
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
-metadata:
-  name: "odoo-addons"
-spec:
-  sourcePVC: "odoo-addons"
-  trigger:
-    schedule: 0 7 * * *
-  restic:
-    copyMethod: "Snapshot"
-    pruneIntervalDays: 10
-    repository: "odoo-addons-volsync-secret"
-    volumeSnapshotClassName: "csi-ceph-blockpool"
-    cacheCapacity: "4Gi"
-    cacheStorageClassName: "ceph-block"
-    cacheAccessModes: ["ReadWriteOnce"]
-    storageClassName: "ceph-block"
-    accessModes: ["ReadWriteOnce"]
-    moverSecurityContext:
-      runAsUser: 65534
-      runAsGroup: 65534
-      fsGroup: 65534
-    retain:
-      hourly: 24
-      daily: 7
-      weekly: 5
-      monthly: 3
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
-metadata:
-  name: "odoo-addons-bootstrap"
-spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: "odoo-addons-volsync-secret"
-    copyMethod: Snapshot # must be Snapshot
-    volumeSnapshotClassName: "csi-ceph-blockpool"
-    cacheStorageClassName: "ceph-block"
-    cacheAccessModes: ["ReadWriteOnce"]
-    cacheCapacity: "4Gi"
-    storageClassName: "ceph-block"
-    accessModes: ["ReadWriteOnce"]
-    capacity: "2Gi"
-    moverSecurityContext:
-      runAsUser: 65534
-      runAsGroup: 65534
-      fsGroup: 65534
-
+  storageClassName: openebs-hostpath

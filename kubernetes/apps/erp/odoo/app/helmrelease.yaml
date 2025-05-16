@@ -95,6 +95,6 @@ spec:
           - path: /etc/odoo/odoo.conf
             subPath: odoo.conf
       extra-addons:
-        existingClaim: odoo-addons
+        existingClaim: odoo-addons-v1
         globalMounts:
           - path: /mnt/extra-addons
