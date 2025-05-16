@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app odoo
+
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  maxHistory: 5
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 5
+
+  values:
+    controllers:
+      odoo:
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "17.4"
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: odoo-init-db
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/blauerfasan/odoo
+              tag: 18.0.20250513
+
+            env:
+              TZ: ${CLUSTER_TIMEZONE}
+
+            envFrom:
+              - secretRef:
+                  name: odoo-secret
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 4Gi
+
+            securityContext:
+              runAsUser: 65534
+              runAsGroup: 65534
+              fsGroup: 65534
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups: [100, 101]
+
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities: { drop: ["ALL"] }
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 8069
+
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /var/lib/odoo
+      etc-config-file:
+        type: configMap
+        name: odoo-configmap
+        globalMounts:
+          - path: /etc/odoo/odoo.conf
+            subPath: odoo.conf
+      extra-addons:
+        existingClaim: odoo-addons
+        globalMounts:
+          - path: /mnt/extra-addons
