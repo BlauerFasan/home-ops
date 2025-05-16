@@ -20,6 +20,7 @@ tasks:
       - cmd: kubectl scale --replicas=0 statefulset/paperless-service -n services
       - cmd: kubectl scale --replicas=0 deployment/firefly-iii -n selfhosted
       - cmd: kubectl scale --replicas=0 deployment/ghostfolio -n selfhosted
+      - cmd: kubectl scale --replicas=0 deployment/monica -n selfhosted
       - cmd: kubectl scale --replicas=0 deployment/mealie -n services
       - cmd: kubectl scale --replicas=0 deployment/vikunja -n services
       - cmd: kubectl scale --replicas=0 deployment/vaultwarden -n security
@@ -35,6 +36,7 @@ tasks:
       - cmd: kubectl scale --replicas=1 statefulset/paperless-service -n services
       - cmd: kubectl scale --replicas=1 deployment/firefly-iii -n selfhosted
       - cmd: kubectl scale --replicas=1 deployment/ghostfolio -n selfhosted
+      - cmd: kubectl scale --replicas=1 deployment/monica -n selfhosted
       - cmd: kubectl scale --replicas=1 deployment/mealie -n services
       - cmd: kubectl scale --replicas=1 deployment/vikunja -n services
       - cmd: kubectl scale --replicas=1 deployment/vaultwarden -n security
@@ -48,6 +50,7 @@ tasks:
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d gatus > ~/dbbackup/gatus.dump
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d ghostfolio > ~/dbbackup/ghostfolio.dump
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d mealie > ~/dbbackup/mealie.dump
+      - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d monica > ~/dbbackup/monica.dump
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d paperless-home > ~/dbbackup/paperless-home.dump
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d paperless-service > ~/dbbackup/paperless-service.dump
       - cmd: kubectl exec postgres17-1 -c postgres -n database -- pg_dump -Fc -d vaultwarden > ~/dbbackup/vaultwarden.dump

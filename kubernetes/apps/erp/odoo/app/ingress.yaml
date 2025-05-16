@@ -5,7 +5,7 @@ metadata:
   name: odoo
   annotations:
     external-dns/is-public: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
     hajimari.io/enable: "true"
     hajimari.io/icon: mdi:cash-register
     hajimari.io/description: "Odoo is a suite of open-source business apps written in Python and JavaScript."
