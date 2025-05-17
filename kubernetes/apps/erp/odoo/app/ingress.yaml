@@ -12,25 +12,25 @@ metadata:
     hajimari.io/group: services
     hajimari.io/appName: Odoo
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
+    # traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
 spec:
   ingressClassName: "traefik"
   tls:
     - hosts:
         - "shodo.${SECRET_DOMAIN_4}"
-        - "odoo.${SECRET_DOMAIN_3}"
+        # - "odoo.${SECRET_DOMAIN_3}"
       secretName: "shodo.${SECRET_DOMAIN_4//./-}-prod-tls"
   rules:
-    - host: odoo.${SECRET_DOMAIN_3}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: odoo
-                port:
-                  number: 8069
+    # - host: odoo.${SECRET_DOMAIN_3}
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: odoo
+    #             port:
+    #               number: 8069
     - host: shodo.${SECRET_DOMAIN_4}
       http:
         paths:
