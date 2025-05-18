@@ -12,9 +12,8 @@ metadata:
     hajimari.io/group: services
     hajimari.io/appName: Odoo
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
-    # traefik.ingress.kubernetes.io/preserve-host: "true"
-    # traefik.ingress.kubernetes.io/forwarded-headers-trusted: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-odoo@kubernetescrd"
+    # Kommentare wurden entfernt, da diese Einstellungen jetzt in der Middleware enthalten sind
 spec:
   ingressClassName: "traefik"
   tls:

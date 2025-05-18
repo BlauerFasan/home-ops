@@ -1,0 +1,18 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: headers-odoo
+  namespace: networking
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+    customResponseHeaders:
+      Strict-Transport-Security: "max-age=31536000"
+    sslRedirect: true
+    forceSTSHeader: true
+    frameDeny: false  # Odoo benötigt iframe-Unterstützung für einige Funktionen
+    contentTypeNosniff: true
+    browserXssFilter: true
+    preserveHost: true
