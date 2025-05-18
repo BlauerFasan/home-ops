@@ -15,4 +15,6 @@ spec:
     frameDeny: false  # Odoo benötigt iframe-Unterstützung für einige Funktionen
     contentTypeNosniff: true
     browserXssFilter: true
-    preserveHost: true
+    hostsProxyHeaders:
+      - "X-Forwarded-Host"
+
