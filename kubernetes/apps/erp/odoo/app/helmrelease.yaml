@@ -53,6 +53,7 @@ spec:
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
+              PROXY_MODE: "True"
 
             envFrom:
               - secretRef:
