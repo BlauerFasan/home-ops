@@ -1,0 +1,33 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odoo
+  annotations:
+    external-dns/is-public: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: mdi:cash-register
+    hajimari.io/description: "Odoo is a suite of open-source business apps written in Python and JavaScript."
+    hajimari.io/group: services
+    hajimari.io/appName: Odoo
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-odoo@kubernetescrd"
+    # Kommentare wurden entfernt, da diese Einstellungen jetzt in der Middleware enthalten sind
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "odoo.${SECRET_DOMAIN_3}"
+      secretName: "odoo.${SECRET_DOMAIN_3//./-}-prod-tls"
+  rules:
+    - host: odoo.${SECRET_DOMAIN_3}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: odoo
+                port:
+                  number: 8069

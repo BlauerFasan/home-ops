@@ -6,11 +6,7 @@ metadata:
   annotations:
     external-dns/is-public: "false"
     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: mdi:cash-register
-    hajimari.io/description: "Odoo is a suite of open-source business apps written in Python and JavaScript."
-    hajimari.io/group: services
-    hajimari.io/appName: Odoo
+    hajimari.io/enable: "false"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-odoo@kubernetescrd"
     # Kommentare wurden entfernt, da diese Einstellungen jetzt in der Middleware enthalten sind
@@ -19,19 +15,8 @@ spec:
   tls:
     - hosts:
         - "shodo.${SECRET_DOMAIN_4}"
-        # - "odoo.${SECRET_DOMAIN_3}"
       secretName: "shodo.${SECRET_DOMAIN_4//./-}-prod-tls"
   rules:
-    # - host: odoo.${SECRET_DOMAIN_3}
-    #   http:
-    #     paths:
-    #       - path: /
-    #         pathType: Prefix
-    #         backend:
-    #           service:
-    #             name: odoo
-    #             port:
-    #               number: 8069
     - host: shodo.${SECRET_DOMAIN_4}
       http:
         paths:
