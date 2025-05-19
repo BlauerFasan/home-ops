@@ -62,7 +62,7 @@ spec:
               VIKUNJA_MAILER_ENABLED: true
               VIKUNJA_MAILER_HOST: smtp-relay.networking.svc.cluster.local.
               VIKUNJA_MAILER_PORT: "25"
-              VIKUNJA_MAILER_FROMEMAIL: Vikunja <noreply@${SECRET_DOMIAN_3}>
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <noreply@${SECRET_DOMAIN_3}>
               VIKUNJA_CACHE_ENABLED: 1
               VIKUNJA_CACHE_TYPE: redis
               VIKUNJA_REDIS_ENABLED: true

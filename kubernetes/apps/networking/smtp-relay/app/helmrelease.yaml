@@ -84,7 +84,7 @@ spec:
         controller: smtp-relay
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMIAN_3}
+          external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMAIN_3}
           lbipam.cilium.io/ips: ${CLUSTER_LB_SMTP}
         ports:
           http:
