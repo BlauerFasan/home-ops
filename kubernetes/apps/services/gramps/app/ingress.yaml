@@ -1,0 +1,31 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gramps
+  annotations:
+    external-dns/is-public: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    hajimari.io/enable: "true"
+    hajimari.io/appName: "Gramps"
+    hajimari.io/group: "services"
+    hajimari.io/icon: "mdi:family-tree"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    # traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-cloudflare-secure-noauth@kubernetescrd"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    - hosts:
+        - "heritage.${SECRET_DOMAIN}"
+      secretName: "heritage.${SECRET_DOMAIN//./-}-prod-tls"
+  rules:
+    - host: heritage.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gramps
+                port:
+                  number: 5000
