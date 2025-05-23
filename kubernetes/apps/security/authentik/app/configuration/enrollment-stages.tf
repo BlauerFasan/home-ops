@@ -96,7 +96,7 @@ resource "authentik_stage_email" "enrollment-email-confirmation" {
   name = "enrollment-email-confirmation"
 
   activate_user_on_success  = true
-  token_expiry              = 30
+  token_expiry              = "minutes=30"
 
   subject                   = "Account Confirmation"
   template                  = "email/account_confirmation.html"

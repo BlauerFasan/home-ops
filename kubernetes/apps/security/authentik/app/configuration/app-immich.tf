@@ -23,7 +23,7 @@ resource "authentik_provider_oauth2" "immich-provider" {
     }
   ]
 
-  # signing_key                = "ab375600-ac9a-4058-a529-dbbc7d960e7a"
+  # signing_key                = "7684d45e-84c7-496d-b7f1-23268b46ee8d"
 
   authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
   invalidation_flow   = data.authentik_flow.default-provider-invalidation-flow.id
