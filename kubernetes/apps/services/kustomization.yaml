@@ -7,7 +7,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./gotenberg/ks.yaml
-  - ./gramps/ks.yaml
+  # - ./gramps/ks.yaml
   - ./it-tools/ks.yaml
   - ./mealie/ks.yaml
   - ./paperless/ks.yaml
