@@ -51,7 +51,7 @@ spec:
           app: &bapp
             image:
               repository: ghcr.io/monicahq/monica-next
-              tag:  main@sha256:9796616d300ced1ece57f096f32ee71c97fdd99e9b09e668a018f0dc1eee1396
+              tag:  main@sha256:5230c4ced439d66fc45ee69178aad190e3ee1443e1cc0508d81d538a54b55fd7
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
