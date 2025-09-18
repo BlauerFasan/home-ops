@@ -49,7 +49,7 @@ spec:
           app:
             image:
               repository: ghcr.io/blauerfasan/odoo
-              tag: 18.0.20250915
+              tag: 18.0.20250915.beta
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
