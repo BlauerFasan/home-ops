@@ -49,7 +49,7 @@ spec:
           app:
             image: &image
               repository: ghcr.io/gramps-project/grampsweb
-              tag: 25.8.0@sha256:8aa4dc68ec1805f1893f266482efa3e1f2f854268fa994f6b08cf5fc7d993214
+              tag: 25.9.0@sha256:24b182c56751ec51c4cb477a9363cda0342f0faf3382d79997a2b080a330c0d0
               pullPolicy: IfNotPresent
 
             env: &envs
