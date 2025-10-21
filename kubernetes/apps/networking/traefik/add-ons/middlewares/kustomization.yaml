@@ -8,17 +8,18 @@ resources:
   - ./chain-cloudflare-default-noauth.yaml
   - ./chain-cloudflare-secure-forwardauth.yaml
   - ./chain-cloudflare-secure-noauth.yaml
+  - ./chain-cloudflare-vaultwarden-noauth.yaml
   - ./chain-internal-default-basicauth.yaml
   - ./chain-internal-default-forwardauth.yaml
   - ./chain-internal-default-noauth.yaml
   - ./chain-internal-secure-forwardauth.yaml
   - ./chain-internal-secure-noauth.yaml
-  - ./chain-cloudflare-vaultwarden-noauth.yaml
   - ./chain-odoo.yaml
   - ./error-handling.yaml
   - ./headers-default.yaml
   - ./headers-odoo.yaml
   - ./headers-secure.yaml
+  - ./headers-vaultwarden.yaml
   - ./ip-cloudflare-only.yaml
   - ./ip-internal-only.yaml
   - ./rate-limit.yaml
