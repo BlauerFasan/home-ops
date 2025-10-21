@@ -13,6 +13,7 @@ resources:
   - ./chain-internal-default-noauth.yaml
   - ./chain-internal-secure-forwardauth.yaml
   - ./chain-internal-secure-noauth.yaml
+  - ./chain-cloudflare-vaultwarden-noauth.yaml
   - ./chain-odoo.yaml
   - ./error-handling.yaml
   - ./headers-default.yaml
