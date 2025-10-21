@@ -2,7 +2,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: headers-secure
+  name: headers-vaultwarden
   namespace: networking
 spec:
   headers:
