@@ -51,7 +51,7 @@ tasks:
           - FiloSottile/age?as=age&type=script
           - fluxcd/flux2?as=flux&type=script
           - getsops/sops?as=sops&type=script
-          - helmfile/helmfile?as=helmfile&type=script
+          # - helmfile/helmfile?as=helmfile&type=script
           - jqlang/jq?as=jq&type=script
           - kubernetes-sigs/kustomize?as=kustomize&type=script
           - siderolabs/talos?as=talosctl&type=script
@@ -63,14 +63,14 @@ tasks:
       - cmd: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
         platforms: ['linux/arm64']
       - cmd: chmod +x kubectl
-      - cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | USE_SUDO="false" HELM_INSTALL_DIR="." bash
+      # - cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | USE_SUDO="false" HELM_INSTALL_DIR="." bash
 
   venv:
     desc: Set up virtual environment
     cmds:
-      - python3.11 -m venv {{.VIRTUAL_ENV}}
-      - '{{.VIRTUAL_ENV}}/bin/python3.11 -m pip install --upgrade pip setuptools wheel'
-      - '{{.VIRTUAL_ENV}}/bin/python3.11 -m pip install --upgrade --requirement "{{.ROOT_DIR}}/requirements.txt"'
+      - python3.12 -m venv {{.VIRTUAL_ENV}}
+      - '{{.VIRTUAL_ENV}}/bin/python3.12 -m pip install --upgrade pip setuptools wheel'
+      - '{{.VIRTUAL_ENV}}/bin/python3.12 -m pip install --upgrade --requirement "{{.ROOT_DIR}}/requirements.txt"'
     sources:
       - '{{.ROOT_DIR}}/requirements.txt'
     generates:

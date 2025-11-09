@@ -14,11 +14,13 @@ tasks:
 
   apply-config:
     desc: Apply Talos configuration to a node
-    cmd: talosctl apply-config --mode={{.MODE}} --nodes {{.HOSTNAME}} --file {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.HOSTNAME}}.yaml
+    cmd: talosctl apply-config --mode={{.MODE}} --nodes {{.NODE_IP}} --file {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.HOSTNAME}}.yaml
     vars:
       MODE: '{{.MODE | default "no-reboot"}}'
       CLUSTER_NAME:
         sh: yq '.clusterName' {{.TALHELPER_CONFIG_FILE}}
+      NODE_IP:
+        sh: kubectl get node {{.HOSTNAME}} -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}'
     requires:
       vars: [HOSTNAME]
     preconditions:
@@ -27,7 +29,7 @@ tasks:
       - msg: Unable to retrieve Talos config
         sh: talosctl config info &>/dev/null
       - msg: Node not found
-        sh: talosctl --nodes {{.HOSTNAME}} get machineconfig &>/dev/null
+        sh: talosctl --nodes $(kubectl get node {{.HOSTNAME}} -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}') get machineconfig &>/dev/null
       - msg: Talos config for node not found
         sh: test -f {{.TALHELPER_CLUSTER_DIR}}/{{.CLUSTER_NAME}}-{{.HOSTNAME}}.yaml
 
@@ -35,10 +37,12 @@ tasks:
     desc: Upgrade Talos on a single node
     cmds:
       - task: '{{if ne .ROLLOUT true}}down{{else}}noop{{end}}'
-      - talosctl --nodes {{.HOSTNAME}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}}" --timeout=10m
-      - talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
+      - talosctl --nodes {{.NODE_IP}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}}" --timeout=10m
+      - talosctl --nodes {{.NODE_IP}} version
       - task: '{{if ne .ROLLOUT true}}up{{else}}noop{{end}}'
     vars:
+      NODE_IP:
+        sh: kubectl get node {{.HOSTNAME}} -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}'
       TALOS_SCHEMATIC_ID:
         sh: kubectl get node {{.HOSTNAME}} --output=jsonpath='{.metadata.annotations.extensions\.talos\.dev/schematic}'
       TALOS_VERSION:
@@ -51,7 +55,7 @@ tasks:
       - msg: Unable to retrieve Talos config
         sh: talosctl config info &>/dev/null
       - msg: Node not found
-        sh: talosctl --nodes {{.HOSTNAME}} get machineconfig &>/dev/null
+        sh: talosctl --nodes $(kubectl get node {{.HOSTNAME}} -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}') get machineconfig &>/dev/null
       - msg: Upstream Talos version not found
         sh: curl -fsSL -o /dev/null --fail https://github.com/siderolabs/talos/releases/tag/{{.TALOS_VERSION}}
 
