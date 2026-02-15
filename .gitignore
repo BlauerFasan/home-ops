@@ -9,15 +9,25 @@ _old_talosconfig
 .decrypted~*.yaml
 .config.env
 *.agekey
+/age.key
 *.pub
 *.key
+/cluster.yaml
+/cloudflare-tunnel.json
+/github-deploy.key
+/github-deploy.key.pub
+/github-push-token.txt
 # Private
-.private
+.private*
+.private/
 .bin
+/old
 # Ansible
 .venv*
+.venv/
 # Taskfile
 .task
+.task/
 # Brew
 Brewfile.lock.json
 # intellij
@@ -26,6 +36,7 @@ Brewfile.lock.json
 wiki
 # Bootstrap
 /config.yaml
+/nodes.yaml
 #Terraform
 .terraform
 .terraform.lock.hcl

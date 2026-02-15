@@ -1,0 +1,137 @@
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://172.30.100.161:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "172.30.100.161"
+  - "cluster.graf.homes"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.166.0.0/16"]
+clusterSvcNets: ["10.199.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "chrb-vmp-ms1"
+    ipAddress: "172.30.100.132"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0e:9d:65:77:fa:a1"
+        dhcp: false
+        addresses:
+          - "172.30.100.132/26"
+        routes:
+          - gateway: "172.30.100.129"
+        mtu: 1500
+        vip:
+          ip: "172.30.100.161"
+  - hostname: "chrb-vmp-ms2"
+    ipAddress: "172.30.100.187"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0e:9d:65:77:fb:a1"
+        dhcp: false
+        addresses:
+          - "172.30.100.142/26"
+        routes:
+          - gateway: "172.30.100.129"
+        mtu: 1500
+        vip:
+          ip: "172.30.100.161"
+  - hostname: "chrb-vmp-ms3"
+    ipAddress: "172.30.100.188"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0e:9d:65:77:fc:a1"
+        dhcp: false
+        addresses:
+          - "172.30.100.152/26"
+        routes:
+          - gateway: "172.30.100.129"
+        mtu: 1500
+        vip:
+          ip: "172.30.100.161"
+  - hostname: "chrb-vmp-nd1"
+    ipAddress: "172.30.100.184"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/44094505f553b2341580d87c83653f3aa5cbef305443e9b981236cb66396b31d
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0e:9d:65:77:fa:b1"
+        dhcp: false
+        addresses:
+          - "172.30.100.136/26"
+        routes:
+          - gateway: "172.30.100.129"
+        mtu: 1500
+  - hostname: "chrb-vmp-nd2"
+    ipAddress: "172.30.100.183"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0e:9d:65:77:fb:b1"
+        dhcp: false
+        addresses:
+          - "172.30.100.146/26"
+        routes:
+          - gateway: "172.30.100.129"
+        mtu: 1500
+  - hostname: "chrb-vmp-nd3"
+    ipAddress: "172.30.100.182"
+    installDisk: "/dev/vda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0e:9d:65:77:fc:b1"
+        dhcp: false
+        addresses:
+          - "172.30.100.156/26"
+        routes:
+          - gateway: "172.30.100.129"
+        mtu: 1500
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/cluster.yaml"
+
