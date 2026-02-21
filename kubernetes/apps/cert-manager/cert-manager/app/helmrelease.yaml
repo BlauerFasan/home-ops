@@ -8,13 +8,34 @@ spec:
     kind: OCIRepository
     name: cert-manager
   interval: 1h
+  maxHistory: 5
+
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+
   values:
     crds:
       enabled: true
-    replicaCount: 1
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
+    replicaCount: 2
+    webhook:
+      replicaCount: 3
+    cainjector:
+      replicaCount: 2
+    enableCertificateOwnerRef: true
     dns01RecursiveNameservers: https://1.1.1.1:443/dns-query,https://1.0.0.1:443/dns-query
     dns01RecursiveNameserversOnly: true
     prometheus:
       enabled: true
       servicemonitor:
         enabled: true
+        prometheusInstance: observability
