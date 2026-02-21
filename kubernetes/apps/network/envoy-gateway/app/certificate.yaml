@@ -10,3 +10,41 @@ spec:
     kind: ClusterIssuer
   commonName: "${SECRET_DOMAIN}"
   dnsNames: ["${SECRET_DOMAIN}", "*.${SECRET_DOMAIN}"]
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${SECRET_DOMAIN_2/./-}-production"
+spec:
+  secretName: "${SECRET_DOMAIN_2/./-}-production-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "${SECRET_DOMAIN_2}"
+  dnsNames: ["${SECRET_DOMAIN_2}", "*.${SECRET_DOMAIN_2}"]
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${SECRET_DOMAIN_3/./-}-production"
+spec:
+  secretName: "${SECRET_DOMAIN_3/./-}-production-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "${SECRET_DOMAIN_3}"
+  dnsNames: ["${SECRET_DOMAIN_3}", "*.${SECRET_DOMAIN_3}"]
+  ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${SECRET_DOMAIN_4/./-}-production"
+spec:
+  secretName: "${SECRET_DOMAIN_4/./-}-production-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "${SECRET_DOMAIN_4}"
+  dnsNames: ["${SECRET_DOMAIN_4}", "*.${SECRET_DOMAIN_4}"]
+
+
