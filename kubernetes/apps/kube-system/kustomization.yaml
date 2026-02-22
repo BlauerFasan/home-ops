@@ -8,7 +8,9 @@ components:
   - ../../components/sops
 
 resources:
+  # Pre Flux-Kustomizations
   - ./namespace.yaml
+  # Flux-Kustomizations
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./metrics-server/ks.yaml

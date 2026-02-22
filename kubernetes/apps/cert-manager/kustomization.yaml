@@ -8,5 +8,7 @@ components:
   - ../../components/sops
 
 resources:
+  # Pre Flux-Kustomizations
   - ./namespace.yaml
+  # Flux-Kustomizations
   - ./cert-manager/ks.yaml

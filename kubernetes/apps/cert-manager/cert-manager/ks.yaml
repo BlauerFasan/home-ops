@@ -27,12 +27,12 @@ spec:
       kind: ClusterIssuer
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+  interval: 1h
+  prune: true
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
-  interval: 1h
-  prune: true
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
