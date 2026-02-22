@@ -23,7 +23,7 @@ spec:
       sync:
         kind: GitRepository
         url: "https://github.com/BlauerFasan/home-ops.git"
-        ref: "refs/heads/main-v2"
+        ref: "refs/heads/main"
         path: kubernetes/flux/cluster
       commonMetadata:
         labels:
