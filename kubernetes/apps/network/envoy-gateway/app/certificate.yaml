@@ -34,7 +34,7 @@ spec:
     kind: ClusterIssuer
   commonName: "${SECRET_DOMAIN_3}"
   dnsNames: ["${SECRET_DOMAIN_3}", "*.${SECRET_DOMAIN_3}"]
-  ---
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
