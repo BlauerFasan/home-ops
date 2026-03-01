@@ -54,3 +54,7 @@ spec:
       enabled: false
     mayastor:
       enabled: false
+    loki:
+      enabled: false
+    minio:
+      enabled: false
