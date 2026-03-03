@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bentopdf
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: bentopdf
+  interval: 1h
+  maxHistory: 5
+
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+
+  values:
+    controllers:
+      bentopdf:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/alam00000/bentopdf-simple
+              tag: 2.4.0@sha256:a6e8ea0ff59c0154f7e54f28e0fac4b28b03e0c57fe67d2d79fdeab8b90805ff
+            env:
+              TZ: ${TIMEZONE}
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 1000Mi
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+
+    service:
+      app:
+        ports:
+          http:
+            port: &port 8080
+
+    persistence:
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          bentopdf:
+            app:
+              - path: /tmp
+                subPath: tmp

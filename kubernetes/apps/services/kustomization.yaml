@@ -11,7 +11,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  #- ./bentopdf/ks.yaml
+  - ./bentopdf/ks.yaml
   - ./gotenberg/ks.yaml
   #- ./gramps/ks.yaml
   #- ./it-tools/ks.yaml
