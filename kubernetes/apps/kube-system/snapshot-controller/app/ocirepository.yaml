@@ -3,12 +3,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: openebs
+  name: snapshot-controller
 spec:
   interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 4.4.0
-  url: oci://ghcr.io/openebs/charts/openebs
+    tag: 5.0.3
+  url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
