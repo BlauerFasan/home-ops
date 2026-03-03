@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/services/bentopdf/app
   dependsOn:
-    - name: evoy-gateway
+    - name: envoy-gateway
       namespace: network
   sourceRef:
     kind: GitRepository
