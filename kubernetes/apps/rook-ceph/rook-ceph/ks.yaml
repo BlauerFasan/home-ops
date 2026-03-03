@@ -13,6 +13,7 @@ spec:
   path: ./kubernetes/apps/rook-ceph/rook-ceph/app
   dependsOn:
     - name: snapshot-controller
+      namespace: kube-system
   sourceRef:
     kind: GitRepository
     name: flux-system
