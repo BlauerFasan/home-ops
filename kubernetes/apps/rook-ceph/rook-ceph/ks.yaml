@@ -51,6 +51,9 @@ spec:
   retryInterval: 2m
   timeout: 15m
   postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: rook
