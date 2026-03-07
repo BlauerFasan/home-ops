@@ -15,6 +15,5 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - identifier:
-            name: garage
-            port: 3900
+        - name: garage
+          port: 3900
