@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: &pv garage-data
+spec:
+  capacity:
+    storage: 1Ti
+  accessModes:
+    - ReadWriteMany
+  storageClassName: *pv
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${LOCAL_LAN_NAS}"
+    path: /mnt/tank/garage/data
+  mountOptions:
+    # - nfsvers=4.1
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: garage-data-pvc
+  namespace: garage
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: garage-data
+  resources:
+    requests:
+      storage: 1Ti
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: &pv garage-meta
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: *pv
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${LOCAL_LAN_NAS}"
+    path: /mnt/tank/garage/meta
+  mountOptions:
+    # - nfsvers=4.1
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - nolock
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: garage-meta-pvc
+  namespace: garage
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: garage-meta
+  resources:
+    requests:
+      storage: 10Gi
