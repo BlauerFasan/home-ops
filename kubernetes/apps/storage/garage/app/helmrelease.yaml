@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app garage-webui
+  name: &app garage
 spec:
   interval: 1h
   chartRef:
