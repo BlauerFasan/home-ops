@@ -14,7 +14,7 @@ spec:
       namespace: network
       sectionName: https
   rules:
-      backendRefs:
+    - backendRefs:
         - identifier:
             name: garage
             port: 3900

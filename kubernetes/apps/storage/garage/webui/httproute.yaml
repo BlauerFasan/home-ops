@@ -17,6 +17,6 @@ spec:
       namespace: network
       sectionName: https
   rules:
-      backendRefs:
+    - backendRefs:
         - name: garage-webui
           port: 3909
