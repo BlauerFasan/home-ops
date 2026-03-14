@@ -1,0 +1,22 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: garage-immich-db
+  namespace: database
+spec:
+  configuration:
+    data:
+      compression: bzip2
+    destinationPath: s3://immich-db/
+    endpointURL: http://garage.storage.svc.cluster.local:3900
+    s3Credentials:
+      accessKeyId:
+        name: immich-db-garage-secret
+        key: AWS_ACCESS_KEY
+      secretAccessKey:
+        name: immich-db-garage-secret
+        key: AWS_SECRET_KEY
+    wal:
+      compression: bzip2
+      maxParallel: 4
+  retentionPolicy: 30d

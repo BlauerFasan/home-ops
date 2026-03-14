@@ -1,0 +1,22 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: garage-home-ops
+  namespace: database
+spec:
+  configuration:
+    data:
+      compression: bzip2
+    destinationPath: s3://postgresql/
+    endpointURL: http://garage.storage.svc.cluster.local:3900
+    s3Credentials:
+      accessKeyId:
+        name: home-ops-db-garage-secret
+        key: AWS_ACCESS_KEY
+      secretAccessKey:
+        name: home-ops-db-garage-secret
+        key: AWS_SECRET_KEY
+    wal:
+      compression: bzip2
+      maxParallel: 4
+  retentionPolicy: 30d
