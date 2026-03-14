@@ -32,7 +32,7 @@ spec:
       shared_buffers: 512MB
       timezone: ${CLUSTER_TIMEZONE}
     shared_preload_libraries:
-      - "vectors.so"
+      - "vchord.so"
 
   monitoring:
     enablePodMonitor: true
