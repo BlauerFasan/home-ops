@@ -38,7 +38,7 @@ nodes:
         vip:
           ip: "172.30.100.161"
   - hostname: "chrb-vmp-ms2"
-    ipAddress: "172.30.100.187"
+    ipAddress: "172.30.100.142"
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
@@ -56,7 +56,7 @@ nodes:
         vip:
           ip: "172.30.100.161"
   - hostname: "chrb-vmp-ms3"
-    ipAddress: "172.30.100.188"
+    ipAddress: "172.30.100.152"
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
@@ -74,7 +74,7 @@ nodes:
         vip:
           ip: "172.30.100.161"
   - hostname: "chrb-vmp-nd1"
-    ipAddress: "172.30.100.184"
+    ipAddress: "172.30.100.136"
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
@@ -90,11 +90,11 @@ nodes:
           - gateway: "172.30.100.129"
         mtu: 1500
   - hostname: "chrb-vmp-nd2"
-    ipAddress: "172.30.100.183"
+    ipAddress: "172.30.100.146"
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/aa4564945219f0b369c4ae15711473fc3057985be00b94bffa56786189226870
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
@@ -106,7 +106,7 @@ nodes:
           - gateway: "172.30.100.129"
         mtu: 1500
   - hostname: "chrb-vmp-nd3"
-    ipAddress: "172.30.100.182"
+    ipAddress: "172.30.100.156"
     installDisk: "/dev/vda"
     machineSpec:
       secureboot: false
