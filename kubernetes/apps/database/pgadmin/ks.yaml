@@ -4,26 +4,35 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app pgadmin
-  namespace: flux-system
 spec:
   targetNamespace: database
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/database/pgadmin/app
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: volsync
-    - name: traefik
+      namespace: volsync-system
+    - name: envoy-gateway
+      namespace: network
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   prune: true
   wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
