@@ -3,20 +3,31 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app it-tools
+  name: &app ghostfolio
 spec:
-  targetNamespace: services
+  targetNamespace: selfhosted
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/services/it-tools/app
+  path: ./kubernetes/apps/selfhosted/ghostfolio/app
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
+    - name: cloudnative-pg-cluster
+      namespace: database
+    - name: dragonfly-cluster
+      namespace: database
     - name: envoy-gateway
       namespace: network
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: ghostfolio
+      namespace: selfhosted
   prune: true
   wait: false
   interval: 30m
@@ -28,5 +39,5 @@ spec:
         kind: Secret
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: it-tools
-      GATUS_GROUP: services
+      GATUS_SUBDOMAIN: toushi
+      GATUS_GROUP: selfhosted

@@ -1,0 +1,26 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ghostfolio
+  namespace: selfhosted
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: finance
+    hajimari.io/group: finance
+    hajimari.io/appName: Zaisan
+spec:
+  hostnames:
+    - "toushi.${SECRET_DOMAIN}"
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: ghostfolio
+          port: 3333
