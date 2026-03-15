@@ -5,11 +5,11 @@ kind: Kustomization
 metadata:
   name: &app volsync
 spec:
-  targetNamespace: volsync
+  targetNamespace: volsync-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/volsync/volsync/app
+  path: ./kubernetes/apps/volsync-system/volsync/app
   dependsOn:
     - name: snapshot-controller
       namespace: kube-system
