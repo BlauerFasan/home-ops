@@ -40,12 +40,16 @@ spec:
             dependsOn: init-db
 
             image:
-              repository: ghcr.io/home-operations/gatus-sidecar
-              tag: 0.0.13@sha256:40d549ea5ae89acac94bdf4cee1233e718a96c6e382c67f7e28de688511169d2
-            args:
-              - --auto-httproute
-              - --enable-httproute
-              - --enable-service
+              repository: ghcr.io/home-operations/k8s-sidecar
+              tag: 2.5.0@sha256:ae958215a6124c6d09dbf6cf568dc72176791bfba8630f4300d4eaaf1caa5b10
+
+            env:
+              FOLDER: /config
+              LABEL: gatus.io/enabled
+              NAMESPACE: ALL
+              RESOURCE: both
+              UNIQUE_FILENAMES: true
+              METHOD: WATCH
 
             resources:
               requests:
