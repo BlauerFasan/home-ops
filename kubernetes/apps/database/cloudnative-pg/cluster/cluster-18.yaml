@@ -16,7 +16,7 @@ spec:
     storageClass: openebs-hostpath
 
   superuserSecret:
-    name: postgres-superuser
+    name: home-ops-db-superuser
 
   enableSuperuserAccess: true
 
