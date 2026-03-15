@@ -23,4 +23,4 @@ spec:
             value: /
       backendRefs:
         - name: gatus
-          port: 8080
+          port: 80
