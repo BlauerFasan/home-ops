@@ -10,7 +10,7 @@ metadata:
     hajimari.io/group: Monitoring
     hajimari.io/appName: Kansatsu
 spec:
-  hostsnames:
+  hostnames:
     - "kansatsu.${SECRET_DOMAIN_2}"
   parentRefs:
     - name: envoy-internal
