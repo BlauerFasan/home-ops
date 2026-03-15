@@ -6,10 +6,15 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/default/echo/app
+  components:
+    - ../../../../components/gatus/external
   postBuild:
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: *app
   prune: true
   sourceRef:
     kind: GitRepository

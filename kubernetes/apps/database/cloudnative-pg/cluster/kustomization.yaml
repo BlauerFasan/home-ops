@@ -6,6 +6,6 @@ resources:
   # - ./cluster-17.yaml
   - ./cluster-18.yaml
   - ./scheduledbackup.yaml
-  # - ./gatus.yaml
+  - ./gatus.yaml
   - ./objectstore.yaml
   - ./secrets.sops.yaml
