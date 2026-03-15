@@ -4,7 +4,7 @@ kind: Kustomization
 metadata:
   name: &app echo
 spec:
-  targetNamespace: database
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -18,7 +18,6 @@ spec:
     namespace: flux-system
   prune: true
   interval: 1h
-  targetNamespace: default
   wait:
   postBuild:
     substituteFrom:
