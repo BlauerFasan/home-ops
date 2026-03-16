@@ -23,27 +23,3 @@ spec:
       backendRefs:
         - name: vaultwarden
           port: 80
----
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: SecurityPolicy
-metadata:
-  name: vaultwarden-admin-protection
-  namespace: security
-spec:
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: vaultwarden
-  authorization:
-    rules:
-      - name: allow-admin-internal
-        action: Deny
-        matches:
-          - path:
-              type: PathPrefix
-              value: /admin
-        principal:
-          ipAddresses:
-            - "10.0.0.0/8"      # Erlaubt nur aus internem Netzwerk
-            - "172.16.0.0/12"   # Private IPs
-            - "192.168.0.0/16"
