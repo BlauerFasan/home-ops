@@ -32,6 +32,9 @@ spec:
   retryInterval: 1m
   timeout: 5m
   postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
