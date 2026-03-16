@@ -50,7 +50,7 @@ spec:
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
-              DOMAIN: https://kinko.${SECRET_DOMAIN}
+              DOMAIN: https://angou.${SECRET_DOMAIN}
               DATA_FOLDER: "data"
               ICON_CACHE_FOLDER: "data/icon_cache"
               ATTACHMENTS_FOLDER: "data/attachments"
@@ -64,7 +64,7 @@ spec:
               # YUBICO_SECRET_KEY:
               WEBSOCKET_ENABLED: true
               WEBSOCKET_ADDRESS: 0.0.0.0
-              SMTP_HOST: smtp-relay.networking.svc.cluster.local.
+              SMTP_HOST: smtp-relay.network.svc.cluster.local.
               SMTP_PORT: 25
               SMTP_SECURITY: "off"
               SMTP_FROM: noreply@${SECRET_DOMAIN_3}
