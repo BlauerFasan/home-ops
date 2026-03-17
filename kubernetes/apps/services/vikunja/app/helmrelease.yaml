@@ -107,3 +107,10 @@ spec:
           vikunja:
             app:
               - path: /app/vikunja/files
+      vikunja-config:
+        type: secret
+        name: vikunja-config
+        globalMounts:
+          - path: /app/vikunja/config.yaml
+            subPath: config.yaml
+            readOnly: true
