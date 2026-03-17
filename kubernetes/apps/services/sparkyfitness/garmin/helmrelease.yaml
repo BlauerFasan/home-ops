@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sparkyfitness-frontend
+
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: sparkyfitness
+  interval: 1h
+
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+
+  values:
+    controllers:
+      sparkyfitness-garmin:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-garmin
+              repository: ghcr.io/codewithcj/sparkyfitness-garmin
+              tag: v0.16.5.3@sha256:1509d664c08e63a33e888ce5b97412a4f234d03b615ca89a4b8163367c6d484b
+
+            env:
+              GARMIN_SERVICE_PORT: "8000"
+              GARMIN_MICROSERVICE_URL: http://sparkyfitness-garmin:8000
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
+
+    service:
+      app:
+        controller: sparkyfitness-garmin
+        ports:
+          http:
+            port: 8000
