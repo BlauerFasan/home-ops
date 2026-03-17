@@ -1,0 +1,25 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: mealie
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "silverware-clean"
+    hajimari.io/group: services
+    hajimari.io/appName: mealie
+spec:
+  hostnames:
+    - "reshipi.${SECRET_DOMAIN}"
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: https
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: mealie
+          port: 9000

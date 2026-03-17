@@ -1,0 +1,53 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sparkyfitness-frontend
+
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: sparkyfitness
+  interval: 1h
+
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+
+  values:
+    controllers:
+      sparkyfitness-frontend:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-frontend
+              repository: ghcr.io/codewithcj/sparkyfitness-frontend
+              tag: v0.16.5.3@sha256:7b3c570937f168844bd88fe7718f648753467c6b4bd5be1763c3632b1a0c8c1b
+
+            env:
+              SPARKY_FITNESS_LOG_LEVEL: debug
+              SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server.services
+              SPARKY_FITNESS_SERVER_PORT: 3010
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+              limits:
+                memory: 64M
+
+    service:
+      app:
+        controller: sparkyfitness-frontend
+        ports:
+          http:
+            port: 80
