@@ -15,7 +15,8 @@ resources:
   - ./gotenberg/ks.yaml
   #- ./gramps/ks.yaml
   - ./it-tools/ks.yaml
-  #- ./mealie/ks.yaml
+  - ./mealie/ks.yaml
+  - ./sparkyfitness/ks.yaml
   #- ./paperless/ks.yaml
   - ./tika/ks.yaml
   #- ./unifi/ks.yaml
