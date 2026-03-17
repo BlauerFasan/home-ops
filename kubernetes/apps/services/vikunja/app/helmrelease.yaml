@@ -49,7 +49,7 @@ spec:
             env:
               #General settings
               VIKUNJA_SERVICE_TIMEZONE: ${CLUSTER_TIMEZONE}
-              VIKUNJA_SERVICE_PUBLICURL: yarukoto.${SECRET_DOMAIN}
+              VIKUNJA_SERVICE_PUBLICURL: https://yarukoto.${SECRET_DOMAIN}
               #Features
               VIKUNJA_SERVICE_ENABLEREGISTRATION: true
               VIKUNJA_SERVICE_ENABLETASKATTACHMENTS: true
