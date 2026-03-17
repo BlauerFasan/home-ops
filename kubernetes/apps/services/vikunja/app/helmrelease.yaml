@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app vikunja
+
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: vikunja
+  interval: 1h
+  maxHistory: 5
+
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 5
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      vikunja:
+        replicas: 1
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "18.3"
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: vikunja-init-db
+
+        containers:
+          app:
+            image:
+              repository: mirror.gcr.io/vikunja/vikunja
+              tag: 2.1.0@sha256:f13103b0287aef74a69241fa46e6cac76e14caf643602144ccaca57fc76e587f
+
+            env:
+              #General settings
+              VIKUNJA_SERVICE_TIMEZONE: ${CLUSTER_TIMEZONE}
+              VIKUNJA_SERVICE_PUBLICURL: yarukoto.${SECRET_DOMAIN}
+              #Features
+              VIKUNJA_SERVICE_ENABLEREGISTRATION: true
+              VIKUNJA_SERVICE_ENABLETASKATTACHMENTS: true
+              VIKUNJA_SERVICE_ENABLELINKSHARING: true
+              VIKUNJA_SERVICE_ENABLEEMAILREMINDERS: true
+
+              #Default settings for new users
+              VIKUNJA_DEFAULTSETTINGS_WEEK_START: 1
+              VIKUNJA_DEFAULTSETTINGS_TIMEZONE: ${CLUSTER_TIMEZONE}
+              VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME: true
+              VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_EMAIL: true
+
+              #Auth settings
+              VIKUNJA_AUTH_LOCAL_ENABLED: false
+              VIKUNJA_AUTH_OPENID_ENABLED: true
+              #SMTP settings
+              VIKUNJA_MAILER_ENABLED: true
+
+              #Cache settings
+              VIKUNJA_CACHE_ENABLED: 1
+              VIKUNJA_CACHE_TYPE: redis
+              VIKUNJA_REDIS_ENABLED: true
+              VIKUNJA_REDIS_HOST: dragonfly.database.svc.cluster.local:6379
+
+            envFrom:
+              - secretRef:
+                  name: vikunja-secret
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 24Mi
+              limits:
+                memory: 300Mi
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 3456
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        advancedMounts:
+          vikunja:
+            app:
+              - path: /app/vikunja/files

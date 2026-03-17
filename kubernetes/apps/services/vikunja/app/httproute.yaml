@@ -1,0 +1,25 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: vikunja
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: todo-add
+    hajimari.io/group: services
+    hajimari.io/appName: yarukoto
+spec:
+  hostnames:
+    - "yarukoto.${SECRET_DOMAIN}"
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: https
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: vikunja
+          port: 3456
