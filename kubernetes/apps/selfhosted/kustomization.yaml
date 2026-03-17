@@ -12,3 +12,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./ghostfolio/ks.yaml
+  - ./paperless/ks.yaml
+  # - ./firefly-iii/ks.yaml
