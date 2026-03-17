@@ -13,7 +13,7 @@ spec:
   hostnames:
     - "kenkou.${SECRET_DOMAIN}"
   parentRefs:
-    - name: envoy-internal
+    - name: envoy-exernal
       namespace: network
       sectionName: https
   rules:
