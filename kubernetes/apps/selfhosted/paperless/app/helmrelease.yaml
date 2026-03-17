@@ -10,7 +10,6 @@ spec:
     kind: OCIRepository
     name: paperless-home
   interval: 1h
-  maxHistory: 5
 
   maxHistory: 5
   install:
