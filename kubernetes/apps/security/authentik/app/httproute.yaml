@@ -1,0 +1,25 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: authentik
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/icon: mdi:shield-account
+    hajimari.io/group: server
+    hajimari.io/appName: authentik
+spec:
+  hostnames:
+    - "auth.${SECRET_DOMAIN}"
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: authentik-server
+          port: 80
