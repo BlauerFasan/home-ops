@@ -58,7 +58,7 @@ spec:
               ALLOW_PRIVATE_NETWORK_CORS: false
               SPARKY_FITNESS_EXTRA_TRUSTED_ORIGINS: ""
 
-              GARMIN_MICROSERVICE_URL: ""
+              GARMIN_MICROSERVICE_URL: http://sparkyfitness-garmin:8000
 
             envFrom:
               - secretRef:
