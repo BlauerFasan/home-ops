@@ -7,6 +7,9 @@ creation_rules:
     encrypted_regex: "^(data|stringData)$"
     mac_only_encrypted: true
     age: "age1m69dr9zpyj8ma7fd9ym86qnp56378rmrdc9hxek664jh2w4q9s3qd7sha2"
+  - path_regex: (bootstrap|kubernetes)/.*\.sops\.json
+    mac_only_encrypted: true
+    age: "age1m69dr9zpyj8ma7fd9ym86qnp56378rmrdc9hxek664jh2w4q9s3qd7sha2"
 stores:
   yaml:
     indent: 2
