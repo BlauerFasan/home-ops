@@ -13,7 +13,7 @@ resources:
   # Flux-Kustomizations
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
-  - ./intel-gpu-plugin/ks.yaml
+  - ./intel-device-plugin/ks.yaml
   - ./metrics-server/ks.yaml
   - ./node-feature-discovery/ks.yaml
   # - ./nvidia-gpu-plugin/ks.yaml
