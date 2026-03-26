@@ -48,8 +48,22 @@ spec:
             probes:
               liveness:
                 enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 8080
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  failureThreshold: 5
               readiness:
                 enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 8080
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  failureThreshold: 5
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
