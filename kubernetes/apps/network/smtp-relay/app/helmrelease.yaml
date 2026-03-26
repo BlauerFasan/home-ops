@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/foxcpp/maddy
-              tag: 0.9.0@sha256:f1d25a91c82d21796aeeb5cbab46153cf564126ac41a792eb1611706f5a1fe0c
+              tag: 0.9.1@sha256:eb2a738a230044f7ade0695323315a79a02c4a9b9eb88942613c249aa0ccab47
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
@@ -48,22 +48,8 @@ spec:
             probes:
               liveness:
                 enabled: true
-                custom: true
-                spec:
-                  tcpSocket:
-                    port: 8080
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  failureThreshold: 5
               readiness:
                 enabled: true
-                custom: true
-                spec:
-                  tcpSocket:
-                    port: 8080
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  failureThreshold: 5
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -101,10 +87,6 @@ spec:
         serviceName: smtp-relay
         endpoints:
           - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
 
     persistence:
       config:
