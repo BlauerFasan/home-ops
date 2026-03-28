@@ -61,15 +61,19 @@ spec:
                 memory: 4Gi
 
             securityContext:
-              runAsUser: 65534
-              runAsGroup: 65534
-              fsGroup: 65534
-              fsGroupChangePolicy: OnRootMismatch
-              supplementalGroups: [100, 101]
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
 
-              # allowPrivilegeEscalation: false
-              # readOnlyRootFilesystem: true
-              # capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [100, 101]
+        seccompProfile: { type: RuntimeDefault }
 
     service:
       app:
