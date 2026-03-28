@@ -1,0 +1,13 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-odoo
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: ip-cloudflare
+      - name: headers-secure
+      - name: headers-odoo
+      - name: rate-limit
