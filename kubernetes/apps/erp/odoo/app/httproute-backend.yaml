@@ -1,0 +1,27 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: odoo-backend
+  annotations:
+    external-dns/is-public: "false"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: mdi:cash-register
+    hajimari.io/description: "Odoo is a suite of open-source business apps written in Python and JavaScript."
+    hajimari.io/group: services
+    hajimari.io/appName: Odoo
+spec:
+  hostnames:
+    - "odoo.${SECRET_DOMAIN_3}"
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: https
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: odoo
+          port: 8069
