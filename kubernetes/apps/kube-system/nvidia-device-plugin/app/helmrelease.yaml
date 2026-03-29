@@ -53,3 +53,4 @@ spec:
       enabled: false
     nodeSelector:
       nvidia.feature.node.kubernetes.io/gpu: "true"
+    runtimeClassName: nvidia
