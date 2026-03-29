@@ -35,8 +35,8 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.4"
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "18.3"
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
