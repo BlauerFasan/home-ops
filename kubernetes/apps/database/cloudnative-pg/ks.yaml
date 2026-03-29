@@ -83,33 +83,33 @@ spec:
         kind: Secret
     substitute:
       APP: *app
-# ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: &app cloudnative-pg-cluster-immich
-# spec:
-#   targetNamespace: database
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
-#   path: './kubernetes/apps/database/cloudnative-pg/immich/'
-#   dependsOn:
-#     - name: cloudnative-pg-operator
-#     - name: cloudnative-pg-plugin-barman-cloud
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#     namespace: flux-system
-#   prune: true
-#   wait: true
-#   interval: 30m
-#   retryInterval: 1m
-#   timeout: 5m
-#   postBuild:
-#     substituteFrom:
-#       - name: cluster-secrets
-#         kind: Secret
-#     substitute:
-#       APP: *app
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app cloudnative-pg-cluster-immich
+spec:
+  targetNamespace: database
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: './kubernetes/apps/database/cloudnative-pg/immich/'
+  dependsOn:
+    - name: cloudnative-pg-operator
+    - name: cloudnative-pg-plugin-barman-cloud
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  prune: true
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+    substitute:
+      APP: *app
