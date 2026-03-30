@@ -15,7 +15,7 @@ resource "authentik_provider_oauth2" "vikunja-provider" {
     }
   ]
 
-  # signing_key                = "7684d45e-84c7-496d-b7f1-23268b46ee8d"
+  signing_key = data.authentik_certificate_key_pair.default.id
 
   authorization_flow  = data.authentik_flow.default-provider-authorization-implicit-consent.id
   invalidation_flow   = data.authentik_flow.default-provider-invalidation-flow.id
