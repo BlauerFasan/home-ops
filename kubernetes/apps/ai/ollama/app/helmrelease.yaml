@@ -57,7 +57,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: http
+                    port: &port 11434
               readiness: *probes
 
             resources:
