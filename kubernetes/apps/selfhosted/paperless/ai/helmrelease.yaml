@@ -62,6 +62,7 @@ spec:
               #Paperless Config
               PAPERLESS_API_URL: http://paperless.selfhosted.svc.cluster.local:8000/api
               PROCESS_PREDEFINED_DOCUMENTS: yes
+              TAGS: KI-Inbox
               USE_EXISTING_DATA: yes
               RESTRICT_TO_EXISTING_DOCUMENT_TYPES: yes
               ADD_AI_PROCESSED_TAG: yes
