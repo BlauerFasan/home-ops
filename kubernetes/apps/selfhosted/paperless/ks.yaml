@@ -40,41 +40,41 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: dms
       GATUS_GROUP: selfhosted
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app paperless-ai
-spec:
-  targetNamespace: selfhosted
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/selfhosted/paperless/ai
-  components:
-    - ../../../../components/gatus/guarded
-    - ../../../../components/volsync
-  dependsOn:
-    - name: paperless
-      namespace: selfhosted
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  prune: true
-  wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
-  postBuild:
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 1Gi
-      GATUS_SUBDOMAIN: dms-ai
-      GATUS_GROUP: selfhosted
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: &app paperless-ai
+# spec:
+#   targetNamespace: selfhosted
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: *app
+#   path: ./kubernetes/apps/selfhosted/paperless/ai
+#   components:
+#     - ../../../../components/gatus/guarded
+#     - ../../../../components/volsync
+#   dependsOn:
+#     - name: paperless
+#       namespace: selfhosted
+#     - name: rook-ceph-cluster
+#       namespace: rook-ceph
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   prune: true
+#   wait: false
+#   interval: 30m
+#   retryInterval: 1m
+#   timeout: 5m
+#   postBuild:
+#     substituteFrom:
+#       - name: cluster-secrets
+#         kind: Secret
+#     substitute:
+#       APP: *app
+#       VOLSYNC_CAPACITY: 1Gi
+#       GATUS_SUBDOMAIN: dms-ai
+#       GATUS_GROUP: selfhosted
