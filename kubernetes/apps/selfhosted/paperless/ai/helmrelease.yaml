@@ -57,7 +57,9 @@ spec:
               AI_PROVIDER: ollama
               OLLAMA_API_URL: http://ollama.ai.svc.cluster.local:11434
               OLLAMA_MODEL: qwen3.5:9b
-              OLLAMA_NUM_CTX: "4096"
+              OLLAMA_NUM_CTX: "8192"
+              TOKEN_LIMIT: "7000"
+              RESPONSE_TOKENS: "1000"
 
               #Paperless Config
               PAPERLESS_API_URL: http://paperless.selfhosted.svc.cluster.local:8000/api
