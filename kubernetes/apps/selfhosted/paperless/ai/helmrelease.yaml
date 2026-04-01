@@ -63,7 +63,7 @@ spec:
               #AI Config
               AI_PROVIDER: ollama
               OLLAMA_API_URL: http://ollama.ai.svc.cluster.local:11434
-              OLLAMA_MODEL: mistral-small3.2:latest
+              OLLAMA_MODEL: mistral-small3.1:latest
               OLLAMA_THINK: no
               OLLAMA_NUM_CTX: "8192"
               TOKEN_LIMIT: "7000"
