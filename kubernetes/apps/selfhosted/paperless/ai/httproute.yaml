@@ -21,5 +21,5 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: paperless-ai
+        - name: paperless-ai-next
           port: 3000
