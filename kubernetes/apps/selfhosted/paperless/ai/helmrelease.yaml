@@ -76,7 +76,7 @@ spec:
 
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false  # temporär
               capabilities: { drop: ["ALL"] }
 
             resources:
