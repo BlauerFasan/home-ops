@@ -66,8 +66,8 @@ spec:
               OLLAMA_MODEL: qwen3.5-paperless:latest
               OLLAMA_THINK: no
               OLLAMA_NUM_CTX: "16384"
-              TOKEN_LIMIT: "14000"
-              RESPONSE_TOKENS: "2300"
+              TOKEN_LIMIT: "13380"
+              RESPONSE_TOKENS: "3000"
 
               #Paperless Config
               PAPERLESS_API_URL: http://paperless.selfhosted.svc.cluster.local:8000/api
