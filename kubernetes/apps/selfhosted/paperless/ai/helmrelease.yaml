@@ -65,9 +65,9 @@ spec:
               OLLAMA_API_URL: http://ollama.ai.svc.cluster.local:11434
               OLLAMA_MODEL: mistral-small3.1:latest
               OLLAMA_THINK: no
-              OLLAMA_NUM_CTX: "8192"
-              TOKEN_LIMIT: "7000"
-              RESPONSE_TOKENS: "1000"
+              OLLAMA_NUM_CTX: "16384"
+              TOKEN_LIMIT: "14000"
+              RESPONSE_TOKENS: "2000"
 
               #Paperless Config
               PAPERLESS_API_URL: http://paperless.selfhosted.svc.cluster.local:8000/api
