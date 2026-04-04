@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: admonstrator/paperless-ai-next
-              tag: v2026.03.06-lite@sha256:819d75325a2f5c33343875ccbd29cf589568c8231ffdd98c1b7a4b908700ffe2
+              tag: v2026.03.06-lite@sha256:d6c4be7b249c0fcf70e8c9809e61be3b4d6b8a67a0aaacef498da37fe89805f1
 
             env:
               #General
