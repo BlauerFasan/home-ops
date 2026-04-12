@@ -33,7 +33,7 @@ spec:
     controllers:
       vikunja:
         replicas: 1
-        strategy: RollingUpdate
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
 
