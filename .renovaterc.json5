@@ -11,6 +11,9 @@
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: "Renovate Dashboard :robot:",
+  registryAliases: {
+    "mirror.gcr.io": "registry-1.docker.io",
+  },
   schedule: ["every weekend"],
   ignorePaths: ["**/*.sops.*"],
   flux: {
