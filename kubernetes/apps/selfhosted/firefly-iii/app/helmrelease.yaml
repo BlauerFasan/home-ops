@@ -55,7 +55,7 @@ spec:
               SEND_ERROR_MESSAGE: false
               SEND_LOGIN_NEW_IP_WARNING: false
               MAIL_MAILER: smtp
-              MAIL_HOST: smtp-relay.networking.svc.cluster.local.
+              MAIL_HOST: smtp-relay.network.svc.cluster.local.
               MAIL_PORT: "25"
               DB_CONNECTION: pgsql
               DB_HOST: "${POSTGRES_HOST_18}"
@@ -122,7 +122,9 @@ spec:
           firefly-iii:
             app:
               - path: /var/www/html/firefly-iii/storage/upload
+      importer-uploads:
+        type: emptyDir
+        advancedMounts:
           data-importer:
             app:
-              - subPath: importer
-                path: /var/www/html/storage/uploads
+              - path: /var/www/html/storage/uploads
