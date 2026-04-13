@@ -74,7 +74,7 @@ spec:
 
       data-importer:
         containers:
-          app:
+          importer:
             image:
               repository: docker.io/fireflyiii/data-importer
               tag: version-2.2.3@sha256:ab52bf9325466431af8b311e9879f0a271b1b555b34cb0e1115d0d10a4ef9665
@@ -108,7 +108,7 @@ spec:
         ports:
           http:
             port: 8080
-      data-importer:
+      importer:
         controller: data-importer
         ports:
           http:
@@ -126,5 +126,5 @@ spec:
         type: emptyDir
         advancedMounts:
           data-importer:
-            app:
+            importer:
               - path: /var/www/html/storage/uploads
