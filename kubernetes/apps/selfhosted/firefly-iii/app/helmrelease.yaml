@@ -90,6 +90,10 @@ spec:
               FIREFLY_III_URL: "http://firefly-iii-app.selfhosted.svc.cluster.local"
               VANITY_URL: "https://kakeibo.${SECRET_DOMAIN}"
 
+            envFrom:
+              - secretRef:
+                  name: firefly-iii-importer-secret
+
             resources:
               requests:
                 cpu: 10m
