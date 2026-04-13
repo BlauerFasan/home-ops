@@ -76,7 +76,7 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/fireflyiii/importer
+              repository: docker.io/fireflyiii/data-importer
               tag: version-2.2.3@sha256:ab52bf9325466431af8b311e9879f0a271b1b555b34cb0e1115d0d10a4ef9665
 
             env:
