@@ -48,5 +48,5 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: firefly-iii-data-importer
+        - name: firefly-iii-importer
           port: 8080
