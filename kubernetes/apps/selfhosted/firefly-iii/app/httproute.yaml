@@ -22,7 +22,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: firefly-iii
+        - name: firefly-iii-app
           port: 8080
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -48,5 +48,5 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: data-importer
+        - name: firefly-iii-data-importer
           port: 8080

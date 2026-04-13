@@ -87,7 +87,7 @@ spec:
               LOG_CHANNEL: "stdout"
 
               # App settings
-              FIREFLY_III_URL: "http://firefly-iii.selfhosted.svc.cluster.local"
+              FIREFLY_III_URL: "http://firefly-iii-app.selfhosted.svc.cluster.local"
               VANITY_URL: "https://kakeibo-import.${SECRET_DOMAIN}"
 
             resources:

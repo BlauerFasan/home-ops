@@ -34,7 +34,7 @@ spec:
                 - --silent
                 - --show-error
                 - --fail
-                - firefly-iii.selfhosted.svc.cluster.local:8080/api/v1/cron/$(STATIC_CRON_TOKEN)
+                - firefly-iii-app.selfhosted.svc.cluster.local:8080/api/v1/cron/$(STATIC_CRON_TOKEN)
               env:
                 - name: STATIC_CRON_TOKEN
                   valueFrom:
