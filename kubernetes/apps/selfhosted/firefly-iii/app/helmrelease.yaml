@@ -72,9 +72,44 @@ spec:
               limits:
                 memory: 1Gi
 
+      data-importer:
+        containers:
+          app:
+            image:
+              repository: docker.io/fireflyiii/importer
+              tag: version-2.2.3@sha256:ab52bf9325466431af8b311e9879f0a271b1b555b34cb0e1115d0d10a4ef9665
+
+            env:
+              # General
+              TZ: ${CLUSTER_TIMEZONE}
+              APP_ENV: "production"
+              APP_DEBUG: "false"
+              LOG_CHANNEL: "stdout"
+
+              # App settings
+              FIREFLY_III_URL: "http://firefly-iii.selfhosted.svc.cluster.local"
+              VANITY_URL: "https://kakeibo-import.${SECRET_DOMAIN}"
+
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 1Gi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+
     service:
       app:
         controller: *app
+        ports:
+          http:
+            port: 8080
+      data-importer:
+        controller: data-importer
         ports:
           http:
             port: 8080
@@ -87,3 +122,7 @@ spec:
           firefly-iii:
             app:
               - path: /var/www/html/firefly-iii/storage/upload
+          data-importer:
+            app:
+              - subPath: importer
+                path: /var/www/html/storage/uploads
