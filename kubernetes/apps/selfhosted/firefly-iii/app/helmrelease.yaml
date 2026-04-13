@@ -88,7 +88,7 @@ spec:
 
               # App settings
               FIREFLY_III_URL: "http://firefly-iii-app.selfhosted.svc.cluster.local"
-              VANITY_URL: "https://kakeibo-import.${SECRET_DOMAIN}"
+              VANITY_URL: "https://kakeibo.${SECRET_DOMAIN}"
 
             resources:
               requests:
