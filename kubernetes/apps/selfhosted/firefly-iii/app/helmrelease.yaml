@@ -46,7 +46,7 @@ spec:
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
-              APP_URL: "kakeibo.${SECRET_DOMAIN}"
+              APP_URL: "https://kakeibo.${SECRET_DOMAIN}"
               TRUSTED_PROXIES: "**" #TODO: Change this
               AUTHENTICATION_GUARD: "remote_user_guard"
               AUTHENTICATION_GUARD_HEADER: X-Authentik-Ffiii-User
@@ -89,6 +89,7 @@ spec:
               # App settings
               FIREFLY_III_URL: "http://firefly-iii-app.selfhosted.svc.cluster.local:8080"
               VANITY_URL: "https://kakeibo.${SECRET_DOMAIN}"
+              TRUSTED_PROXIES: "**"
 
             envFrom:
               - secretRef:
