@@ -31,7 +31,7 @@ spec:
             image:
               # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-garmin
               repository: ghcr.io/codewithcj/sparkyfitness-garmin
-              tag: v0.16.5.8@sha256:5206072608e3e85110fb30a59c0c3107490a2cbf1bcef75a3eaf767b2a42ba4b
+              tag: v0.16.6.0@sha256:90d5a9cf06534347756890209301d40baab92ef42fb6e58836634d182a402f1a
 
             env:
               GARMIN_SERVICE_PORT: "8000"
