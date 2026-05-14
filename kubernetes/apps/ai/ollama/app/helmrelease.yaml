@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ollama/ollama
-              tag: 0.23.0@sha256:5600a652d1081050f398152127c584222546354491f27fe47ccbc6351bc870bd
+              tag: 0.23.4@sha256:7ffd891da3e9e278d042c856c0fbe1b10fa03ed1791471377dde331eae4ea834
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
