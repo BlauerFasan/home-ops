@@ -74,7 +74,7 @@ spec:
         loadBalancerIP: "${CLUSTER_LB_UNIFI}"
         externalTrafficPolicy: Cluster
         ports:
-          http:
+          https:
             enabled: true
             port: 8443
             protocol: HTTPS
