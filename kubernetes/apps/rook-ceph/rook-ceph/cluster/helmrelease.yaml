@@ -10,11 +10,14 @@ spec:
     kind: OCIRepository
     name: rook-ceph-cluster
   interval: 1h
+  timeout: 60m
 
   install:
+    timeout: 60m
     remediation:
       retries: 5
   upgrade:
+    timeout: 60m
     cleanupOnFail: true
     remediation:
       strategy: rollback
