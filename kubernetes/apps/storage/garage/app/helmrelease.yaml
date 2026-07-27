@@ -37,7 +37,7 @@ spec:
                   name: garage-secret
 
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${CLUSTER_TIMEZONE}
 
             securityContext:
               allowPrivilegeEscalation: false
