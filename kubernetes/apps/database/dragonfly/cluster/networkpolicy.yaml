@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/networking.k8s.io/networkpolicy_v1.json
+# Additive policy: the dragonfly-operator already manages a NetworkPolicy that
+# only allows ingress from pods within the `database` namespace. This policy
+# grants access on port 6379 to the other namespaces that consume dragonfly.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dragonfly-cross-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: dragonfly
+      app.kubernetes.io/name: dragonfly
+      app.kubernetes.io/part-of: dragonfly
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: media
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: selfhosted
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: services
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+      ports:
+        - port: 6379
+          protocol: TCP
