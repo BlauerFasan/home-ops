@@ -20,7 +20,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 5
-    serverSideApply: disabled
+    serverSideApply: false
   upgrade:
     cleanupOnFail: true
     crds: CreateReplace
