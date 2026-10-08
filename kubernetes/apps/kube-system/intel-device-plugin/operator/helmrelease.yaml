@@ -20,11 +20,15 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 5
+    serverSideApply: disabled
   upgrade:
     cleanupOnFail: true
     crds: CreateReplace
     remediation:
       retries: 5
+    serverSideApply: disabled
+  rollback:
+    serverSideApply: disabled
   uninstall:
     keepHistory: false
   # values:
