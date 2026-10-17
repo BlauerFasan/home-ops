@@ -2,7 +2,9 @@
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/networking.k8s.io/networkpolicy_v1.json
 # Additive policy: the dragonfly-operator already manages a NetworkPolicy that
 # only allows ingress from pods within the `database` namespace. This policy
-# grants access on port 6379 to the other namespaces that consume dragonfly.
+# grants access on port 6379 to the other namespaces that consume dragonfly, and
+# on admin port 9999 to the operator, whose labels differ from the
+# `control-plane: controller-manager` selector in the managed policy.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -31,4 +33,14 @@ spec:
               kubernetes.io/metadata.name: observability
       ports:
         - port: 6379
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: database
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: dragonfly-operator
+      ports:
+        - port: 9999
           protocol: TCP
