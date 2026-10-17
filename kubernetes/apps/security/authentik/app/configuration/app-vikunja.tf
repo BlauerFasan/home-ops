@@ -10,8 +10,9 @@ resource "authentik_provider_oauth2" "vikunja-provider" {
   client_secret         = data.sops_file.secrets.data["vikunja_client-secret"]
   allowed_redirect_uris = [
     {
-      matching_mode = "strict",
-      url           = data.sops_file.secrets.data["vikunja_redirect-url"],
+      matching_mode     = "strict",
+      redirect_uri_type = "authorization",
+      url               = data.sops_file.secrets.data["vikunja_redirect-url"],
     }
   ]
 

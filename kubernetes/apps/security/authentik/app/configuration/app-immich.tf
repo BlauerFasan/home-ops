@@ -10,16 +10,19 @@ resource "authentik_provider_oauth2" "immich-provider" {
   client_secret         = data.sops_file.secrets.data["immich_client-secret"]
   allowed_redirect_uris = [
     {
-      matching_mode = "strict",
-      url           = data.sops_file.secrets.data["immich_redirect-url-1"],
+      matching_mode     = "strict",
+      redirect_uri_type = "authorization",
+      url               = data.sops_file.secrets.data["immich_redirect-url-1"],
     },
     {
-      matching_mode = "strict",
-      url           = data.sops_file.secrets.data["immich_redirect-url-2"],
+      matching_mode     = "strict",
+      redirect_uri_type = "authorization",
+      url               = data.sops_file.secrets.data["immich_redirect-url-2"],
     },
     {
-      matching_mode = "strict",
-      url           = data.sops_file.secrets.data["immich_redirect-url-3"],
+      matching_mode     = "strict",
+      redirect_uri_type = "authorization",
+      url               = data.sops_file.secrets.data["immich_redirect-url-3"],
     }
   ]
 

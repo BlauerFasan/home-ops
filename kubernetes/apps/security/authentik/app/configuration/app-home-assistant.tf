@@ -3,6 +3,11 @@ resource "authentik_group" "home-assistant-group" {
   is_superuser = false
 }
 
+resource "authentik_group" "home-assistant-admin-group" {
+  name         = "home-assistant-admin"
+  is_superuser = false
+}
+
 resource "authentik_provider_oauth2" "home-assistant-provider" {
   name                  = "Home-Assistant"
   client_type           = "confidential"
@@ -10,8 +15,9 @@ resource "authentik_provider_oauth2" "home-assistant-provider" {
   client_secret         = data.sops_file.secrets.data["home-assistant_client-secret"]
   allowed_redirect_uris = [
     {
-      matching_mode = "strict",
-      url           = data.sops_file.secrets.data["home-assistant_redirect-url"],
+      matching_mode     = "strict",
+      redirect_uri_type = "authorization",
+      url               = data.sops_file.secrets.data["home-assistant_redirect-url"],
     }
   ]
 
@@ -45,6 +51,17 @@ resource "authentik_policy_binding" "home-assistant-app-policy-binding" {
   enabled        = true
 
   group          = authentik_group.home-assistant-group.id
+  negate         = false
+  failure_result = false
+}
+
+resource "authentik_policy_binding" "home-assistant-app-admin-policy-binding" {
+  target         = authentik_application.home-assistant-app.uuid
+  order          = 1
+
+  enabled        = true
+
+  group          = authentik_group.home-assistant-admin-group.id
   negate         = false
   failure_result = false
 }
