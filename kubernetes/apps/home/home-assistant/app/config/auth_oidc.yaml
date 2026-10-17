@@ -8,4 +8,4 @@ auth_oidc:
   # Members of neither group are rejected
   roles:
     user: home-assistant
-    admin: home-assistant-admins
+    admin: home-assistant-admin
