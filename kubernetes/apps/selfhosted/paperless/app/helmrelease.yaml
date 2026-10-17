@@ -87,8 +87,8 @@ spec:
               PAPERLESS_REDIS_PREFIX: home
               #Tika & Gotenberg
               PAPERLESS_TIKA_ENABLED: 1
-              PAPERLESS_TIKA_ENDPOINT: http://tika.serivces.svc.cluster.local:9998
-              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg.serivces.svc.cluster.local:3000
+              PAPERLESS_TIKA_ENDPOINT: http://tika.services.svc.cluster.local:9998
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg.services.svc.cluster.local:3000
 
             envFrom:
               - secretRef:
