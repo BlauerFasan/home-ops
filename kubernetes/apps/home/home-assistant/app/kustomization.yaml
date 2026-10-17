@@ -7,3 +7,9 @@ resources:
   - ./ocirepository.yaml
   - ./networks.yaml
   - ./secrets.sops.yaml
+configMapGenerator:
+  - name: home-assistant-packages
+    files:
+      - ./config/auth_oidc.yaml
+generatorOptions:
+  disableNameSuffixHash: true

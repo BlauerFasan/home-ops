@@ -88,6 +88,10 @@ spec:
                 EOF
                   touch /config/automations.yaml /config/scripts.yaml /config/scenes.yaml
                 fi
+                # Load the Git-managed packages (ConfigMap mounted in /config/packages)
+                if ! grep -q '!include_dir_named packages' /config/configuration.yaml; then
+                  printf '\nhomeassistant:\n  packages: !include_dir_named packages\n' >> /config/configuration.yaml
+                fi
                 if [ ! -f /config/.storage/http ]; then
                   mkdir -p /config/.storage
                   cat > /config/.storage/http <<EOF
@@ -114,6 +118,27 @@ spec:
                   }
                 }
                 EOF
+                fi
+
+          # Pinned custom component (https://github.com/christiaangoossens/hass-oidc-auth)
+          init-oidc:
+            image: *image
+            command: ["/bin/sh", "-c"]
+            env:
+              # renovate: datasource=github-releases depName=christiaangoossens/hass-oidc-auth
+              OIDC_VERSION: v1.2.1
+              OIDC_SHA256: e5badaaacaa63cfd6fe733924a05e76d75058836190398598fb24de57cd47ccd
+            args:
+              - |
+                set -eu
+                dest=/config/custom_components/auth_oidc
+                if [ "$(cat "$dest/.version" 2>/dev/null)" != "$OIDC_VERSION" ]; then
+                  wget -q -O /tmp/oidc.zip "https://github.com/christiaangoossens/hass-oidc-auth/releases/download/$OIDC_VERSION/hass-oidc-auth.zip"
+                  echo "$OIDC_SHA256  /tmp/oidc.zip" | sha256sum -c -
+                  rm -rf "$dest"
+                  mkdir -p "$dest"
+                  unzip -q /tmp/oidc.zip -d "$dest"
+                  echo "$OIDC_VERSION" > "$dest/.version"
                 fi
 
         containers:
@@ -217,6 +242,17 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /config
+      packages:
+        type: configMap
+        name: home-assistant-packages
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/packages
+                readOnly: true
+            code-server:
+              - path: /config/packages
+                readOnly: true
       # https://community.home-assistant.io/t/wth-is-going-on-with-docker-container-installs-and-third-party-integrations-that-need-python-modules/806430/6
       dockerenv:
         type: emptyDir
