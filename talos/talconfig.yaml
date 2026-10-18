@@ -98,7 +98,7 @@ nodes:
     controlPlane: false
     # NVIDIA GPU node: load the driver modules from the nvidia extensions
     patches:
-      - "@./patches/node/nvidia.yaml"
+      - "@./patches/chrb-vmp-nd2/nvidia.yaml"
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "0e:9d:65:77:fb:b1"
