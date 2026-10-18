@@ -96,6 +96,9 @@ nodes:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/aa4564945219f0b369c4ae15711473fc3057985be00b94bffa56786189226870
     controlPlane: false
+    # NVIDIA GPU node: load the driver modules from the nvidia extensions
+    patches:
+      - "@./patches/node/nvidia.yaml"
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: "0e:9d:65:77:fb:b1"
