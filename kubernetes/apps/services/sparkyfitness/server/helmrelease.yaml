@@ -41,11 +41,11 @@ spec:
             image:
               # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-server
               repository: ghcr.io/codewithcj/sparkyfitness-server
-              tag: v0.16.6.3@sha256:b6a1395f02f793d61a7631b840153719a8d07e53fad32655126266b3769c4a97
+              tag: v1.9.0@sha256:f8be8d6963d17e4e5e406a4a8462c0ca4ce5c7e54fd9cb52890f5bfb7012b365
 
             env:
               TZ: ${CLUSTER_TIMEZONE}
-              SPARKY_FITNESS_LOG_LEVEL: debug
+              SPARKY_FITNESS_LOG_LEVEL: info
 
               SPARKY_FITNESS_FRONTEND_URL: "https://kenkou.${SECRET_DOMAIN}"
 
@@ -83,4 +83,7 @@ spec:
         enabled: true
         existingClaim: sparkyfitness-server
         globalMounts:
-          - path: /uploads
+          - path: /app/SparkyFitnessServer/uploads
+            subPath: uploads
+          - path: /app/SparkyFitnessServer/backup
+            subPath: backup
