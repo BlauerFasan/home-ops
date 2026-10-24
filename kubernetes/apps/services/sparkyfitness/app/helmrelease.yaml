@@ -35,7 +35,7 @@ spec:
 
             env:
               SPARKY_FITNESS_LOG_LEVEL: debug
-              SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server.services
+              SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server.services.svc.cluster.local
               SPARKY_FITNESS_SERVER_PORT: 3010
 
             resources:
