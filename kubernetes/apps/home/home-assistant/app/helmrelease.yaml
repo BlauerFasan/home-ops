@@ -71,7 +71,7 @@ spec:
           init-config:
             image: &image
               repository: ghcr.io/home-assistant/home-assistant
-              tag: 2026.10.3
+              tag: 2026.10.4
             command: ["/bin/sh", "-c"]
             args:
               - |
