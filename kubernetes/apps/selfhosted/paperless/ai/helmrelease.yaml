@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: admonstrator/zettelrobbe
-              tag: v2026.10.02
+              tag: v2026.10.03
 
             env:
               #General
