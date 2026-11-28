@@ -126,7 +126,7 @@ spec:
             command: ["/bin/sh", "-c"]
             env:
               # renovate: datasource=github-releases depName=christiaangoossens/hass-oidc-auth
-              OIDC_VERSION: v1.2.1
+              OIDC_VERSION: v1.3.0
               OIDC_SHA256: e5badaaacaa63cfd6fe733924a05e76d75058836190398598fb24de57cd47ccd
             args:
               - |
